@@ -1,29 +1,39 @@
 <template>
   <div>
-   <!--  <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+    <!--  <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
       alt="Your Company" /> -->
     <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
       Connectez-vous à votre compte</h2>
     <p class="mt-2 text-center text-sm text-gray-600">
       ou bien
       {{ ' ' }}
-      <router-link :to="{name: 'Register'}" class="font-medium text-primary hover:text-yellow-500"> Inscrivez-vous </router-link>
+      <router-link :to="{ name: 'Register' }" class="font-medium text-primary hover:text-yellow-500"> Inscrivez-vous
+      </router-link>
     </p>
   </div>
-  <form class="mt-8 space-y-6" action="#" method="POST">
+  <form class="mt-8 space-y-6" @submit="login">
     <input type="hidden" name="remember" value="true" />
     <div class="-space-y-px rounded-md shadow-sm">
       <div>
         <label for="email-address" class="sr-only">Email</label>
-        <input id="email-address" name="email" type="email" autocomplete="email" required=""
+        <input id="email-address" name="email" type="email" autocomplete="email" required="" v-model="user.email"
           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
           placeholder="Email" />
       </div>
       <div>
         <label for="password" class="sr-only">Mot de passe</label>
         <input id="password" name="password" type="password" autocomplete="current-password" required=""
+          v-model="user.password"
           class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
           placeholder="Mot de passe" />
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <input id="remember-me" name="remember-me" type="checkbox" v-model="user.remember"
+          class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+        <label for="remember-me" class="ml-2 block text-sm text-gray-900">Mémoriser</label>
       </div>
     </div>
 
@@ -39,13 +49,30 @@
   </form>
 </template>
 
-<script>
+<script setup>
 
 import { LockClosedIcon } from '@heroicons/vue/20/solid'
+import store from '../store';
+import { useRouter } from 'vue-router';
 
-export default {
-  components: {
-    LockClosedIcon,
-  },
+const router = useRouter();
+
+const user = {
+  email: '',
+  password: '',
+  remember: Boolean,
 }
+
+function login(ev) {
+  ev.preventDefault();
+  store
+    .dispatch('login', user)
+    //une fois que la connexion a été faite il faut amener l'utilisateur ailleurs. 
+    .then((res) => {
+      router.push({
+        name: 'Dashboard'
+      })
+    })
+}
+
 </script>
