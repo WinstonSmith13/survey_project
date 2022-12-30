@@ -33,10 +33,6 @@
           class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
         <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
       </div>
-
-      <div class="text-sm">
-        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
-      </div>
     </div>
 
     <div>
@@ -45,7 +41,7 @@
         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
           <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
         </span>
-        Sign in
+        Connexion
       </button>
     </div>
   </form>

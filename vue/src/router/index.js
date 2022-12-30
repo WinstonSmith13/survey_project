@@ -50,11 +50,11 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.state.user.token) {
     // Vérifie si l'utilisateur est authentifié
     next({
-      path: '/login',
+      path: '/login'
     })
   }
   //si token exite et si l'utilisateur accède à la page de Login ou bien de Register alors on le redirige vers la page Accueil
-  else if (store.state.user.token && to.name === 'Login' || to.name === 'Register') {
+  else if (store.state.user.token && (to.name === 'Login' || to.name === 'Register')) {
     next({ name: 'Dashboard' });
   }
   else {
