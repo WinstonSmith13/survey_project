@@ -23,7 +23,9 @@ const routes = [
   {
     path: '/auth',
     name: 'Auth',
-    component: AuthLayout,
+    component: AuthLayout, 
+    //factorisation du code pour la route
+    meta: { isGuest: true },
     children: [
       {
         path: '/login',
@@ -54,7 +56,7 @@ router.beforeEach((to, from, next) => {
     })
   }
   //si token exite et si l'utilisateur accède à la page de Login ou bien de Register alors on le redirige vers la page Accueil
-  else if (store.state.user.token && (to.name === 'Login' || to.name === 'Register')) {
+  else if (store.state.user.token && (to.meta.isGuest)) {
     next({ name: 'Dashboard' });
   }
   else {

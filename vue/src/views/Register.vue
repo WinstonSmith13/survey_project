@@ -20,16 +20,16 @@
           placeholder="Nom Prénom" />
       </div>
       <div>
-        <label for="email-address" class="sr-only">Email address</label>
+        <label for="email-address" class="sr-only">Email</label>
         <input id="email-address" name="email" type="email" autocomplete="email" required=""
           class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
-          placeholder="Email address" />
+          placeholder="Email" />
       </div>
       <div>
-        <label for="password" class="sr-only">Password</label>
+        <label for="password" class="sr-only">Mot de passe</label>
         <input id="password" name="password" type="password" autocomplete="current-password" required=""
           class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
-          placeholder="Password" />
+          placeholder="Mot de passe" />
       </div>
     </div>
 
