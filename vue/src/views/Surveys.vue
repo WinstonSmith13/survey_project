@@ -76,4 +76,10 @@ import { computed } from 'vue';
 import PageComponent from '../components/PageComponent.vue';
 
 const surveys = computed(() => store.state.surveys);
+
+function deleteSurvey(survey) {
+  if(confirm('Êtes-vous sûre de vouloir supprimer ce formulaire?')){
+    //deleteSurvey
+  }
+}
 </script>
