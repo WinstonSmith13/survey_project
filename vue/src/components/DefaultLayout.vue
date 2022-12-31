@@ -82,7 +82,7 @@
 
           </div>
           <div class="mt-3 space-y-1 px-2">
-            <DisclosureButton as="a" @click="Logout"
+            <DisclosureButton as="a" @click="logout"
               class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer">
               Se déconnecter
             </DisclosureButton>

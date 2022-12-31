@@ -22,7 +22,8 @@ class AuthController extends Controller
                 'required',
                 'confirmed',
                 //on definie les conditions pour un bon mot de passe
-                Password::min(8)->mixedCase()->numbers()->symbols()]
+                Password::min(8)->mixedCase()->numbers()->symbols()
+            ]
         ]);
 
         /** @var User */
@@ -39,10 +40,10 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $token
         ]);
-
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
         $credentials = $request->validate([
             'email' => 'required|email|string|exists:users,email',
@@ -55,19 +56,30 @@ class AuthController extends Controller
         unset($credentials['remember']);
 
         //Si les valeurs ne correspondent pas alors on déclare un message. Avec le fameux statut 422 (qui indique que la validation n'est pas bonne.
-        if(!Auth::attempt($credentials, $remember)){
-            return response ([
-                'error' => "les informations d'identification fournies ne sont pas valides"
+        if (!Auth::attempt($credentials, $remember)) {
+            return response([
+                'error' => "Les informations d'identification fournies ne sont pas valides"
             ], 422);
         }
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
-        return response([
-           'user'=>$user,
-           'token'=>$token
-        ]);
 
+
+        return response([
+            'user' => $user,
+            'token' => $token
+        ]);
     }
 
-}
+    public function logout()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+//Pour la suppresion du Token utilisé pour l'authentification de l'utilisateur.
+        $user->currentAccessToken()->delete();
 
+        return response([
+            'success' => true
+        ]);
+    }
+}
