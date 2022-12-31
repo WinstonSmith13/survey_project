@@ -96,7 +96,7 @@
                         Vous n'avez pas ajouté de questions. 
                     </div>
                     <div v-for="(question, index) in model.questions" :key="question.id">
-                        <QuestionEditor :question="question" :index="index "/>
+                        <QuestionEditor :question="question" :index="index " @changes="questionChange" @addQuestion="addQuestion" @deleteQuestion="deleteQuestion"/>
 
                     </div>
 
