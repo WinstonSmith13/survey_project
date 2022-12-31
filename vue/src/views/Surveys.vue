@@ -1,5 +1,7 @@
 <template>
-  <PageComponent title="Formulaire"> Content </PageComponent>
+  <PageComponent title="Formulaire"> 
+    Content 
+  </PageComponent>
 </template>
 
 <script setup>
