@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-full">
-    <Disclosure as="nav" class="bg-primary" v-slot="{ open }">
+    <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <img class="h-8 w-8 bg-yellow-500 rounded-full p-2" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+              <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                 alt="Your Company" />
             </div>
             <div class="hidden md:block">
@@ -28,10 +28,10 @@
               <Menu as="div" class="relative ml-3">
                 <div>
                   <MenuButton
-                    class="flex max-w-xs items-center rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary">
+                    class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span class="sr-only">Open user menu</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="currentColor" class="w-10 h-10 text-white">
+                      stroke="currentColor" class="w-6 h-6 text-white">
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -79,7 +79,7 @@
           <div class="flex items-center px-5">
             <div class="flex-shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-10 h-10 text-white">
+                stroke="currentColor" class="w-6 h-6 text-white">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
