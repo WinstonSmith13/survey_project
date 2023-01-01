@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->group(function(){
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
+    //All the CRUD are specified using the route::resource
+    Route::resource('/survey', \App\Http\Controllers\SurveyController::class);
 });
 
 //pour des raisons de sécurités toujours utiliser la méthode post pour l'inscription.
