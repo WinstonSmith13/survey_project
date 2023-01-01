@@ -19,7 +19,7 @@ const tmpSurveys = [
         question: "Etes-vous présent pour la session du lundi 2 janvier 2023?",
         description: null,
         data: {
-          option: [
+          options: [
             //utilisation de uuid pour la facilité de création et aussi pour eviter les erreurs de répétitions d'id.
             { uuid: "f8af96f2-1d80-4632-9e9e-b560670e52ea", text: "Oui" },
             { uuid: "201c1ff5-23c9-42f9-bfb5-bbc850536440", text: "Non" },
@@ -33,7 +33,7 @@ const tmpSurveys = [
         question: "Pour quelles séances allez-vous etre présent pour la semaine du 2 janvier 2023?",
         description: "Planification de la semaine du 2 janvier 2023",
         data: {
-          option: [
+          options: [
             //utilisation de uuid pour la facilité de création et aussi pour eviter les erreurs de répétitions d'id.
             { uuid: "f8af96f2-1d80-4632-9e9e-b560670e52ea", text: "Lundi" },
             { uuid: "201c1ff5-23c9-42f9-bfb5-bbc850536440", text: "Mercredi" },
@@ -49,7 +49,7 @@ const tmpSurveys = [
         question: "Pour quelles séances allez-vous etre présent pour la semaine du 9 janvier 2023?",
         description: "Planification de la semaine du 9 janvier 2023",
         data: {
-          option: [
+          options: [
             //utilisation de uuid pour la facilité de création et aussi pour eviter les erreurs de répétitions d'id.
             { uuid: "f8af96f2-1d80-4632-9e9e-b560670e52ea", text: "Lundi" },
             { uuid: "201c1ff5-23c9-42f9-bfb5-bbc850536440", text: "Mercredi" },
@@ -65,7 +65,7 @@ const tmpSurveys = [
         question: "Pour quelles séances allez-vous etre présent pour la semaine du 16 janvier 2023?",
         description: "Planification de la semaine du 16 janvier 2023",
         data: {
-          option: [
+          options: [
             //utilisation de uuid pour la facilité de création et aussi pour eviter les erreurs de répétitions d'id.
             { uuid: "f8af96f2-1d80-4632-9e9e-b560670e52ea", text: "Lundi" },
             { uuid: "201c1ff5-23c9-42f9-bfb5-bbc850536440", text: "Mercredi" },
@@ -136,6 +136,7 @@ const store = createStore({
       token: sessionStorage.getItem("TOKEN"),
     },
     surveys: [...tmpSurveys],
+    questionTypes: ["text", "select", "radio", "checkbox", "textarea"],
   },
   getters: {},
   actions: {
