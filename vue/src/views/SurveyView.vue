@@ -18,7 +18,7 @@
                             Image
                         </label>
                         <div class="mt-1 flex items-center">
-                            <img v-if="model.image" :src="model.image" :alt="model.image"
+                            <img v-if="model.image_url" :src="model.image_url" :alt="model.image"
                                 class="w-64 h-48 object-cover" />
                             <span v-else class=" 
                             flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100
@@ -31,7 +31,7 @@
                             </span>
                             <button type="button"
                                 class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                                <input type="file" class="
+                                <input type="file" @change="onImageChoose" class="
                                 opacity-100
                                 cursor-pointer" />
 
@@ -156,6 +156,19 @@ if (route.params.id) {
     );
 }
 
+function onImageChoose(ev) {
+    const file = ev.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+        // The field to send on backend and apply validations
+        model.value.image = reader.result;
+        // The field to display here
+        model.value.image_url = reader.result;
+        ev.target.value = "";
+    };
+    reader.readAsDataURL(file);
+}
+
 function addQuestion(index) {
     const newQuestion = {
         id: uuidv4(),
@@ -188,11 +201,11 @@ function questionChange(question) {
 }
 
 function saveSurvey() {
-    store.dispatch("saveSurvey", model.value).then(({data}) => {
-    router.push({
-        name:"SurveyView",
-        params:{id: data.data.id},
-    });
+    store.dispatch("saveSurvey", model.value).then(({ data }) => {
+        router.push({
+            name: "SurveyView",
+            params: { id: data.data.id },
+        });
     });
 };
 

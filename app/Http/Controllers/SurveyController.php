@@ -7,7 +7,8 @@ use App\Http\Requests\UpdateSurveyRequest;
 use App\Http\Resources\SurveyResource;
 use App\Models\Survey;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 
 class SurveyController extends Controller
@@ -34,9 +35,18 @@ class SurveyController extends Controller
     public function store(StoreSurveyRequest $request)
     {
         //Validated() Pour récupérer toutes les données valides.
+        $data = $request->validated();
+
+        // Check if image was given and save on local file system
+        if (isset($data['image'])) {
+            $relativePath  = $this->saveImage($data['image']);
+            $data['image'] = $relativePath;
+        }
+
         //create pour la création dans db de survey
-        $result = Survey::create($request->validated());
-        return new SurveyResource($result);
+        $survey = Survey::create($data);
+
+        return new SurveyResource($survey);
     }
 
     /**
@@ -50,7 +60,7 @@ class SurveyController extends Controller
         $user = $request->user();
         //Si le l'utilisateur auth n'est pas égale à l'utilisateur du formulaire alors cela veut dire que la personne auth est différente de l'utilisateur qui a créer le formulaire.
         if ($user->id !== $survey->user_id) {
-            return abort( 403, 'Unauthorized action.');
+            return abort(403, 'Unauthorized action.');
         }
         return new SurveyResource($survey);
     }
@@ -78,10 +88,44 @@ class SurveyController extends Controller
     {
         $user = $request->user();
         //verification que le current user à le droit de supprimer le formulaire.
-        if ($user->id !== $survey->user_id){
-            return abort( 403, 'Unauthorized action.');
+        if ($user->id !== $survey->user_id) {
+            return abort(403, 'Unauthorized action.');
         }
         $survey->delete();
-        return response('',204);
+        return response('', 204);
+    }
+
+    private function saveImage($image){
+        // Check if image is valid base64 string
+        if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
+            // Take out the base64 encoded text without mime type
+            $image = substr($image, strpos($image, ',') + 1);
+            // Get file extension
+            $type = strtolower($type[1]); // jpg, png, gif
+
+            // Check if file is an image
+            if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                throw new \Exception('invalid image type');
+            }
+            $image = str_replace(' ', '+', $image);
+            $image = base64_decode($image);
+
+            if ($image === false) {
+                throw new \Exception('base64_decode failed');
+            }
+        } else {
+            throw new \Exception('did not match data URI with image data');
+        }
+
+        $dir = 'images/';
+        $file = Str::random() . '.' . $type;
+        $absolutePath = public_path($dir);
+        $relativePath = $dir . $file;
+        if (!File::exists($absolutePath)) {
+            File::makeDirectory($absolutePath, 0755, true);
+        }
+        file_put_contents($relativePath, $image);
+
+        return $relativePath;
     }
 }
