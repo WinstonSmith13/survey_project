@@ -93,11 +93,12 @@
                         </button>
                     </h3>
                     <div v-if="!model.questions.length" class="text-center text-gray-600">
-                        Vous n'avez pas ajouté de questions. 
+                        Vous n'avez pas ajouté de questions.
                     </div>
                     <div v-for="(question, index) in model.questions" :key="question.id">
                         <!--On ecoute les changements dans l'éditeur de questions grace aux emits.-->
-                        <QuestionEditor :question="question" :index="index " @changes="questionChange" @addQuestion="addQuestion" @deleteQuestion="deleteQuestion"/>
+                        <QuestionEditor :question="question" :index="index" @changes="questionChange"
+                            @addQuestion="addQuestion" @deleteQuestion="deleteQuestion" />
 
                     </div>
 
@@ -125,9 +126,9 @@
 </template>
 
 <script setup>
+import { v4 as uuidv4 } from "uuid";
 import store from '../store';
 import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import PageComponent from '../components/PageComponent.vue';
 import QuestionEditor from '../components/editor/QuestionEditor.vue';
@@ -151,6 +152,37 @@ if (route.params.id) {
     model.value = store.state.surveys.find(
         (s) => s.id === parseInt(route.params.id)
     );
+}
+
+function addQuestion(index) {
+    const newQuestion = {
+        id: uuidv4(),
+        type: "text",
+        question: "",
+        description: null,
+        data: {},
+    };
+    //Ajout des questions dans le tableau de Questions
+    model.value.questions.splice(index, 0, newQuestion);
+}
+
+//l'idée est supprimer les questions qui n'ont pas de questions.id
+function deleteQuestion(question) {
+    model.value.questions = model.value.questions.filter((q) => q.id !== question.id);
+}
+
+function questionChange(question) {
+    // Important to explicitelly assign question.data.options, because otherwise it is a Proxy object
+    // and it is lost in JSON.stringify()
+    if (question.data.options) {
+        question.data.options = [...question.data.options];
+    }
+    model.value.questions = model.value.questions.map((q) => {
+        if (q.id === question.id) {
+            return JSON.parse(JSON.stringify(question));
+        }
+        return q;
+    });
 }
 
 
