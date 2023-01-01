@@ -140,6 +140,28 @@ const store = createStore({
   },
   getters: {},
   actions: {
+    saveSurvey({ commit, dispatch }, survey) {
+
+      delete survey.image_url;
+
+      let response;
+      //sur le formulaire a une id alors on est entrain de modifier un formulaire, sinon on est entrain de créer un nouveau formulaire. 
+      if (survey.id) {
+        response = axiosClient
+          .put(`/survey/${survey.id}`, survey)
+          .then((res) => {
+            commit('updateSurvey', res.data)
+            return res;
+          });
+      } else {
+        response = axiosClient.post("/survey", survey).then((res) => {
+          commit('saveSurvey', res.data)
+          return res;
+        });
+      }
+
+      return response;
+    },
 
     register({ commit }, user) {
       return axiosClient.post('/register', user)
@@ -178,6 +200,17 @@ const store = createStore({
     setToken: (state, token) => {
       state.user.token = token;
       sessionStorage.setItem('TOKEN', token);
+    },
+    saveSurvey: (state, survey) => {
+      state.surveys = [...state.surveys, survey.data];
+    },
+    updateSurvey: (state, survey) => {
+      state.surveys = state.surveys.map((s) => {
+        if (s.id == survey.data.id) { 
+          return survey.data; 
+        }
+        return s;
+      }); 
     },
   },
   modules: {}
