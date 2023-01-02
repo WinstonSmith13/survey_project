@@ -164,7 +164,7 @@ const store = createStore({
           throw err;
         });
     },
-    saveSurvey({ commit, dispatch }, survey) {
+    saveSurvey({ commit }, survey) {
 
       delete survey.image_url;
 
@@ -185,6 +185,10 @@ const store = createStore({
       }
 
       return response;
+    },
+
+    deleteSurvey({ }, id) {
+      return axiosClient.delete(`/survey/${id}`);
     },
 
     register({ commit }, user) {
@@ -212,6 +216,7 @@ const store = createStore({
         })
     }
   },
+
   mutations: {
     logout: (state) => {
       state.user.data = {};

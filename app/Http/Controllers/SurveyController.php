@@ -39,7 +39,7 @@ class SurveyController extends Controller
 
         // Check if image was given and save on local file system
         if (isset($data['image'])) {
-            $relativePath  = $this->saveImage($data['image']);
+            $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;
         }
 
@@ -100,7 +100,7 @@ class SurveyController extends Controller
      * @param \App\Models\Survey $survey
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Survey $survey)
+    public function destroy(Survey $survey, Request $request)
     {
         $user = $request->user();
         //verification que le current user à le droit de supprimer le formulaire.
@@ -111,7 +111,8 @@ class SurveyController extends Controller
         return response('', 204);
     }
 
-    private function saveImage($image){
+    private function saveImage($image)
+    {
         // Check if image is valid base64 string
         if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
             // Take out the base64 encoded text without mime type
