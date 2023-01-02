@@ -8,6 +8,7 @@ use App\Http\Resources\SurveyResource;
 use App\Models\Survey;
 use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,7 @@ class SurveyController extends Controller
         $user = $request->user();
         //on the survey model, paginate for the pagination on the app.
         //Because we created Survey Ressources for the api we need to
-        return SurveyResource::collection(Survey::where('user_id', $user->id)->paginate(50));
+        return SurveyResource::collection(Survey::where('user_id', $user->id)->orderBy('created_at', 'DESC')->paginate(10));
     }
 
     /**
@@ -98,20 +99,44 @@ class SurveyController extends Controller
                 File::delete($absolutePath);
             }
         }
-
-        //Get Ids of the existing question for updating.
-
-        //Get Ids of the  newquestion.
-
-        //Find the questions to add.
-
-        //Delete questions by $toDelete array
-
-        //Create
-
-
         //Update survey in the database
         $survey->update($data);
+
+        // Get ids as plain array of existing questions
+        $existingIds = $survey->questions()->pluck('id')->toArray();
+        // Get ids as plain array of new questions
+        $newIds = Arr::pluck($data['questions'], 'id');
+        // Find questions to delete
+        $toDelete = array_diff($existingIds, $newIds);
+        // Find questions to add
+        $toAdd = array_diff($newIds, $existingIds);
+
+        // Delete questions by $toDelete array
+        SurveyQuestion::destroy($toDelete);
+
+        // Create new questions
+        //We need to check if the question id is in the To Add array. We want to update not delete.
+        foreach ($data['questions'] as $question) {
+            if (in_array($question['id'], $toAdd)) {
+                $question['survey_id'] = $survey->id;
+                $this->createQuestion($question);
+            }
+        }
+
+        // Update existing questions
+        //Creating a map with id in key.
+
+        $questionMap = collect($data['questions'])->keyBy('id');
+        //Boucle in the database for the question.
+        foreach ($survey->questions as $question) {
+            //if the database question id exist inside the question map, this mean that is the question we need to update.
+            if (isset($questionMap[$question->id])) {
+                $this->updateQuestion($question, $questionMap[$question->id]);
+            }
+        }
+
+
+
         return new SurveyResource($survey);
     }
 
@@ -178,7 +203,7 @@ class SurveyController extends Controller
     {
         //Dans un premier temps verification que les datas recu contiennent des data
         if (is_array($data['data'])) {
-            //we need to do that because we cannot save an array in the db.
+
             $data['data'] = json_encode($data['data']);
         }
         //Creating a validator
@@ -197,5 +222,32 @@ class SurveyController extends Controller
             'survey_id' => 'exists:App\Models\Survey,id'
         ]);
         return SurveyQuestion::create($validator->validated());
+    }
+
+    //$question is an instance of surveyQuestion.
+    private function updateQuestion(SurveyQuestion $question, $data)
+    {
+        if (is_array($data['data'])) {
+
+            $data['data'] = json_encode($data['data']);
+        }
+        //Creating a validator
+        $validator = Validator::make($data, [
+            //the id must exist in the SurveyQuestion id column.
+            'id' => 'exists:App\Models\SurveyQuestion,id',
+            'question' => 'required|string',
+            'type' => ['required', Rule::in([
+                Survey::TYPE_TEXT,
+                Survey::TYPE_TEXTAREA,
+                Survey::TYPE_SELECT,
+                Survey::TYPE_RADIO,
+                Survey::TYPE_CHECKBOX,
+            ])],
+            'description' => 'nullable|string',
+            'data' => 'present',
+        ]);
+
+        //We call update with the validatorUpdate. For security. 
+        return $question->update($validator->validated());
     }
 }
