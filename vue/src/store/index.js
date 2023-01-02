@@ -18,6 +18,11 @@ const store = createStore({
       data: [],
     },
     questionTypes: ["text", "select", "radio", "checkbox", "textarea"],
+    notification: {
+      show: false,
+      type: null,
+      message: null
+    },
   },
   getters: {},
   actions: {
@@ -71,7 +76,7 @@ const store = createStore({
         //if we get a response the loading has to stop. 
         commit("setSurveysLoading", false);
         commit("setSurveys", res.data);
-        
+
         return res;
       })
     },
@@ -98,8 +103,8 @@ const store = createStore({
           return response;
         })
     },
-    saveSurveyAnswer({commit}, {surveyId, answers}) {
-      return axiosClient.post(`/survey/${surveyId}/answer`, {answers});
+    saveSurveyAnswer({ commit }, { surveyId, answers }) {
+      return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },
   },
 
@@ -128,6 +133,16 @@ const store = createStore({
     setSurveys: (state, data) => {
       state.surveys.data = data;
     },
+    //deconstruction pour avoir pas que DATA mais message et type. 
+    notify: (state, { message, type }) => {
+      state.notification.show = true;
+      state.notification.type = type;
+      state.notification.message = message;
+      //After 3sec set the notification to false. 
+      setTimeout(()=>{
+        state.notification.show = false;
+      }, 3000)
+    }
   },
   modules: {}
 })

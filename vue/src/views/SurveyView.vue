@@ -31,7 +31,7 @@
                 <span class="sr-only">Chargement...</span>
             </div>
         </div>
-        <form v-else @submit.prevent="saveSurvey">
+        <form v-else @submit.prevent="saveSurvey" class="animate-fade-in-down">
             <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <!--Survey Fields-->
                 <div class="px-4 py-5 bg-white space-y-6 sm:-p-6">
@@ -236,6 +236,10 @@ function questionChange(question) {
 
 function saveSurvey() {
     store.dispatch("saveSurvey", model.value).then(({ data }) => {
+        store.commit('notify',{
+            type: 'success',
+            message: 'Le formulaire a bien été créé.'
+        })
         router.push({
             name: "SurveyView",
             params: { id: data.data.id },
