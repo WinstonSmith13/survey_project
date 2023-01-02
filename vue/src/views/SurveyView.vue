@@ -242,7 +242,6 @@ function saveSurvey() {
     });
 };
 
-
 function deleteSurvey() {
     if (
         confirm(
