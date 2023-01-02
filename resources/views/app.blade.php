@@ -1,21 +1,15 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" value="{{ csrf_token() }}"/>
-    <title>Laravel 8 Vue JS CRUD Example  - Tutsmake</title>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-    <link href="{{ mix('vue/src/index.css') }}" type="text/css" rel="stylesheet"/>
-    <style>
-        .bg-light {
-            background-color: #eae9e9 !important;
-        }
-    </style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>How To Install Vue 3 in Laravel 9 with Vite</title>
+
+	@vite('resources/css/app.css')
 </head>
 <body>
-<div id="app">
-</div>
-<script src="{{ mix('vue/src/main.js') }}" type="text/javascript"></script>
+	<div id="app"></div>
+
+	@vite('vue/src/main.js')
 </body>
 </html>

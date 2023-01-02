@@ -6,9 +6,12 @@ use App\Http\Requests\StoreSurveyRequest;
 use App\Http\Requests\UpdateSurveyRequest;
 use App\Http\Resources\SurveyResource;
 use App\Models\Survey;
+use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 
 class SurveyController extends Controller
@@ -23,7 +26,7 @@ class SurveyController extends Controller
         $user = $request->user();
         //on the survey model, paginate for the pagination on the app.
         //Because we created Survey Ressources for the api we need to
-        return SurveyResource::collection(Survey::where('user_id', $user->id)->paginate());
+        return SurveyResource::collection(Survey::where('user_id', $user->id)->paginate(50));
     }
 
     /**
@@ -43,8 +46,16 @@ class SurveyController extends Controller
             $data['image'] = $relativePath;
         }
 
+
         //create pour la création dans db de survey
         $survey = Survey::create($data);
+
+        //Create New questions.
+        foreach ($data['questions'] as $question) {
+            //Each question need to have survey_id to be store in the DB.
+            $question['survey_id'] = $survey->id;
+            $this->createQuestion($question);
+        }
 
         return new SurveyResource($survey);
     }
@@ -87,6 +98,16 @@ class SurveyController extends Controller
                 File::delete($absolutePath);
             }
         }
+
+        //Get Ids of the existing question for updating.
+
+        //Get Ids of the  newquestion.
+
+        //Find the questions to add.
+
+        //Delete questions by $toDelete array
+
+        //Create
 
 
         //Update survey in the database
@@ -151,5 +172,30 @@ class SurveyController extends Controller
         file_put_contents($relativePath, $image);
 
         return $relativePath;
+    }
+
+    private function createQuestion($data)
+    {
+        //Dans un premier temps verification que les datas recu contiennent des data
+        if (is_array($data['data'])) {
+            //we need to do that because we cannot save an array in the db.
+            $data['data'] = json_encode($data['data']);
+        }
+        //Creating a validator
+        $validator = Validator::make($data, [
+            'question' => 'required|string',
+            //Adding the option
+            'type' => ['required', Rule::in([
+                Survey::TYPE_TEXT,
+                Survey::TYPE_TEXTAREA,
+                Survey::TYPE_SELECT,
+                Survey::TYPE_RADIO,
+                Survey::TYPE_CHECKBOX,
+            ])],
+            'description' => 'nullable|string',
+            'data' => 'present',
+            'survey_id' => 'exists:App\Models\Survey,id'
+        ]);
+        return SurveyQuestion::create($validator->validated());
     }
 }

@@ -55,8 +55,8 @@
     <div class="grid gap-3 grid-cols-12">
         <!-- Question -->
         <div class="mt-3 col-span-9">
-            <label :for="'question_text_' + model.data" class="block text-sm font-medium text-gray-700">Question
-                Text</label>
+            <label :for="'question_text_' + model.data" class="block text-sm font-medium text-gray-700">
+                Question</label>
             <input type="text" :name="'question_text_' + model.data" v-model="model.question" @change="dataChange"
                 :id="'question_text_' + model.data" class="
             mt-1
@@ -87,12 +87,15 @@
             focus:outline-none focus:ring-primary focus:border-primary
             sm:text-sm
           ">
-                <option v-for="type in questionTypes" :key="type" :value="type">
+
+
+
+                <option v-for='type in questionTypes' :key='type' :value='type'>
                     {{ upperCaseFirst(type) }}
                 </option>
             </select>
         </div>
-        <!--/ Question Type -->
+
     </div>
 
     <!-- Question Description -->
@@ -136,15 +139,13 @@
                             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    Ajouter une option de réponse
+                    Ajouter une réponse
                 </button>
                 <!--/ Add new option -->
             </h4>
 
             <div v-if="!model.data.options.length" class="text-xs text-gray-600 text-center py-3">
-                <pre> {{ model.data.options }}</pre>
-
-                You don't have any options defined
+                Vous n'avez pas ajouté de réponses.
             </div>
             <!-- Option list -->
             <div v-for="(option, index) in model.data.options" :key="option.uuid" class="flex items-center mb-1">
@@ -189,8 +190,10 @@
   
 <script setup>
 import { v4 as uuidv4 } from "uuid";
-import { computed, ref } from "@vue/reactivity";
+import { computed, ref } from "vue";
 import store from "../../store";
+
+
 const props = defineProps({
     question: Object,
     index: Number,
@@ -198,6 +201,7 @@ const props = defineProps({
 
 
 const emit = defineEmits(["change", "addQuestion", "deleteQuestion"]);
+
 // Re-create the whole question data to avoid unintentional reference change
 const model = ref(JSON.parse(JSON.stringify(props.question)));
 // Get question types from vuex
@@ -238,7 +242,7 @@ function typeChange() {
 }
 // Emit the data change
 function dataChange() {
-    const data = JSON.parse(JSON.stringify(model.value));
+    const data = model.value;
     if (!shouldHaveOptions()) {
         delete data.data.options;
     }
@@ -252,6 +256,3 @@ function deleteQuestion() {
 }
 </script>
   
-<style>
-
-</style>

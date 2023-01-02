@@ -120,8 +120,8 @@
                     </div>
                     <div v-for="(question, index) in model.questions" :key="question.id">
                         <!--On ecoute les changements dans l'éditeur de questions grace aux emits.-->
-                        <QuestionEditor :question="question" :index="index" @changes="questionChange"
-                            @addQuestion="addQuestion" @deleteQuestion="deleteQuestion" />
+                        <QuestionEditorVue :question="question" :index="index" @change="questionChange" @addQuestion="addQuestion" @deleteQuestion="deleteQuestion"></QuestionEditorVue>
+                        
 
                     </div>
 
@@ -155,7 +155,8 @@ import { useRoute } from 'vue-router';
 import { useRouter } from "vue-router";
 import { ref, watch, computed } from 'vue';
 import PageComponent from '../components/PageComponent.vue';
-import QuestionEditor from '../components/editor/QuestionEditor.vue';
+import QuestionEditorVue from "../components/editor/QuestionEditor.vue";
+
 
 const route = useRoute();
 const router = useRouter();

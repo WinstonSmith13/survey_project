@@ -6,7 +6,7 @@ import store from "./store";
 const axiosClient = axios.create({
     //Laraval API
     baseURL: 'http://localhost:8000/api'
-    
+
 })
 
 

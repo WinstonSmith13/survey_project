@@ -97,7 +97,10 @@ const store = createStore({
           commit('logout')
           return response;
         })
-    }
+    },
+    saveSurveyAnswer({commit}, {surveyId, answers}) {
+      return axiosClient.post(`/survey/${surveyId}/answer`, {answers});
+    },
   },
 
   mutations: {
