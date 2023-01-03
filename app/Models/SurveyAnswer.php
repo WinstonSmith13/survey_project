@@ -17,5 +17,7 @@ class SurveyAnswer extends Model
         'start_date',
         'end_date'];
 
-    
+    public function survey(){
+        return $this->belongsTo(Survey::class);
+    }
 }
