@@ -6,6 +6,7 @@ use App\Http\Requests\StoreSurveyRequest;
 use App\Http\Requests\UpdateSurveyRequest;
 use App\Http\Resources\SurveyResource;
 use App\Models\Survey;
+use App\Models\SurveyAnswer;
 use App\Models\SurveyQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\StoreSurveyAnswerRequest;
 
 
 class SurveyController extends Controller
@@ -74,10 +76,6 @@ class SurveyController extends Controller
         if ($user->id !== $survey->user_id) {
             return abort(403, 'Unauthorized action.');
         }
-
-
-
-
         return new SurveyResource($survey);
     }
 
@@ -90,6 +88,30 @@ class SurveyController extends Controller
     public function showForGuest(Survey $survey)
     {
         return new SurveyResource($survey);
+    }
+
+
+    //We accept survey Model.
+    //Mais aussi answerRequest.
+    public function storeAnswer(StoreSurveyAnswerRequest $request,Survey $survey){
+//we need to take the validated data from the request.
+        $validated = $request->validated();
+
+        $surveyAnswer = SurveyAnswer::create([
+            //what we pass in the data.
+            'survey_id' => $survey->id,
+            'start_date' => date('Y-m-d H:i:s'),
+            'end_date' => date('Y-m-d H:i:s'),
+        ]);
+
+        //We interate on the validated answer.
+        // Key Question id - valeurs Answer.
+        //Associated id
+        foreach ($validated['answers'] as $questionId => $answer){
+            //on verifie que la réponse fait bien du formulaire.
+            //pour cela on questionne la database.
+            $question = SurveyQuestion::where(['id' => $questionId, 'survey_id' => $survey->id])->get();
+        }
     }
 
     /**
