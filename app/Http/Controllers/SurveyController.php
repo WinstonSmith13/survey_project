@@ -8,6 +8,7 @@ use App\Http\Resources\SurveyResource;
 use App\Models\Survey;
 use App\Models\SurveyAnswer;
 use App\Models\SurveyQuestion;
+use App\Models\SurveyQuestionAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -93,7 +94,8 @@ class SurveyController extends Controller
 
     //We accept survey Model.
     //Mais aussi answerRequest.
-    public function storeAnswer(StoreSurveyAnswerRequest $request,Survey $survey){
+    public function storeAnswer(StoreSurveyAnswerRequest $request, Survey $survey)
+    {
 //we need to take the validated data from the request.
         $validated = $request->validated();
 
@@ -107,11 +109,24 @@ class SurveyController extends Controller
         //We interate on the validated answer.
         // Key Question id - valeurs Answer.
         //Associated id
-        foreach ($validated['answers'] as $questionId => $answer){
+        foreach ($validated['answers'] as $questionId => $answer) {
             //on verifie que la réponse fait bien du formulaire.
             //pour cela on questionne la database.
             $question = SurveyQuestion::where(['id' => $questionId, 'survey_id' => $survey->id])->get();
+            if (!$question) {
+                return response("Invalid question ID: \"$questionId\"", 400);
+            }
+            //If condition true we continue and we save data in the array.
+            $data = [
+                'survey_question_id' => $questionId,
+                'survey_answer_id' => $surveyAnswer->id,
+                //we pass also the answer, if the answer is an array like in the checkbox type, we jsencode.
+                'answer' => is_array($answer) ? json_encode($answer) : $answer,
+            ];
+            SurveyQuestionAnswer::create($data);
         }
+        //we are going to listen to that response in the front end side.
+        return response("", 201);
     }
 
     /**
@@ -171,7 +186,6 @@ class SurveyController extends Controller
                 $this->updateQuestion($question, $questionMap[$question->id]);
             }
         }
-
 
 
         return new SurveyResource($survey);
