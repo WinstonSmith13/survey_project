@@ -3,7 +3,7 @@
         <div v-if="loading" class="flex justify-center items-center mt-80">
             <div role="status">
                 Chargement ...
-                
+
                 <svg class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -18,11 +18,13 @@
         </div>
 
         <!--Formulaire-->
-        <form v-else @submit.prevent="submitSurvey" class="container mx-auto bg-gray-100 mt-40 rounded-md p-4 shadow-md">
+        <form v-else @submit.prevent="submitSurvey"
+            class="container mx-auto bg-gray-100 mt-40 rounded-md p-4 shadow-md">
             <div class="grid grid-cols-6 items-center">
                 <div class="mr-4">
                     <img v-if="survey.image_url" :src="survey.image_url" alt="image survey" class="shadow-md" />
-                    <img v-else src="./../assets/Logo-MUST-400px-2.png" :src="survey.image_url" alt="image survey" class="shadow-md" />
+                    <img v-else src="./../assets/Logo-MUST-400px-2.png" :src="survey.image_url" alt="image survey"
+                        class="shadow-md" />
                 </div>
                 <div class="col-span-5">
                     <!--Title of the survey-->
@@ -31,7 +33,8 @@
                 </div>
             </div>
             <!--Pour l'affichage d'un element si le formulaire a déjà été effectué-->
-            <div v-if="surveyFinished" class="py-8 px-6 bg-emerald-400 text-white w-[600px] mx-auto">
+            <div v-if="surveyFinished"
+                class="grid justify-center mt-8 rounded-md py-6 px-6 bg-emerald-400 text-white w-[600px] mx-auto">
                 <div class="text-xl mb-3 font-semibold ">Réponse bien enregistrée.</div>
                 <button @click="submitAnotherResponse" type="button"
                     class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
