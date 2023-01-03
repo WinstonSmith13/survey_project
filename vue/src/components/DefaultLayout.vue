@@ -106,7 +106,7 @@
   </div>
 
 
-  <footer class="p-4 bg-white shadow md:px-6 md:py-8 dark:bg-gray-900">
+  <footer class="p-4 bg-white shadow md:px-6 md:py-8 dark:bg-gray-900 ">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"> 
     <div class="sm:flex sm:items-center sm:justify-between">
 
