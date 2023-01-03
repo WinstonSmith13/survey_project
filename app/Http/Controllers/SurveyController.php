@@ -74,6 +74,21 @@ class SurveyController extends Controller
         if ($user->id !== $survey->user_id) {
             return abort(403, 'Unauthorized action.');
         }
+
+
+
+
+        return new SurveyResource($survey);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\Survey $survey
+     * @return \Illuminate\Http\Response
+     */
+    public function showForGuest(Survey $survey)
+    {
         return new SurveyResource($survey);
     }
 
@@ -247,7 +262,7 @@ class SurveyController extends Controller
             'data' => 'present',
         ]);
 
-        //We call update with the validatorUpdate. For security. 
+        //We call update with the validatorUpdate. For security.
         return $question->update($validator->validated());
     }
 }

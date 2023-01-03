@@ -106,6 +106,20 @@ const store = createStore({
     saveSurveyAnswer({ commit }, { surveyId, answers }) {
       return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },
+    getSurveyBySlug({ commit }, slug) {
+      commit("setCurrentSurveyLoading", true);
+      //on fait une requete http pour envoyer vers le back. 
+      return axiosClient.get(`survey-by-slug/${slug}`).then((res) => {
+        commit("setCurrentSurvey", res.data);
+        commit("setCurrentSurveyLoading", false);
+        //on retourne la reponse. 
+        return res;
+      })
+        .catch((err) => {
+          commit("setCurrentSurveyLoading", false);
+          throw err;
+        })
+    },
   },
 
   mutations: {
@@ -131,7 +145,7 @@ const store = createStore({
       state.currentSurvey.data = survey.data;
     },
     setSurveys: (state, surveys) => {
-    
+
       state.surveys.data = surveys.data;
     },
     //deconstruction pour avoir pas que DATA mais message et type. 
@@ -140,7 +154,7 @@ const store = createStore({
       state.notification.type = type;
       state.notification.message = message;
       //After 3sec set the notification to false. 
-      setTimeout(()=>{
+      setTimeout(() => {
         state.notification.show = false;
       }, 3000)
     }

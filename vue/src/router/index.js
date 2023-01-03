@@ -3,12 +3,22 @@ import Dashboard from "../views/Dashboard.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
-import Surveys from "../views/Surveys.vue"
-import SurveyView from "../views/SurveyView.vue"
+import Surveys from "../views/Surveys.vue";
+import SurveyView from "../views/SurveyView.vue";
 import store from "../store";
-import AuthLayout from "../components/AuthLayout.vue"
+import AuthLayout from "../components/AuthLayout.vue";
+import SurveyPublicView from "../views/SurveyPublicView.vue"
 
 const routes = [
+  //Creation d'une nouvelle route pour acceder aux vues des formulaires publics. 
+  //Avec l'utilisation de la variable slug qui permet d'avoir chaque formulaires. 
+  {
+    //definition de la route 
+path:'/view/survey/:slug',
+//definition du nom de la route 
+name: 'SurveyPublicView',
+component: SurveyPublicView
+  },
   {
     path: '/',
     redirect: '/dashboard',

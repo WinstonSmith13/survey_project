@@ -107,19 +107,17 @@
 
 
   <footer class="p-4 bg-white shadow md:px-6 md:py-8 dark:bg-gray-900">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"> 
     <div class="sm:flex sm:items-center sm:justify-between">
 
       <img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Your Company" />
 
       <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
         <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+          <a href="#" class="mr-4 hover:underline md:mr-6 ">À propos</a>
         </li>
         <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-        </li>
-        <li>
-          <a href="#" class="mr-4 hover:underline md:mr-6 ">Licensing</a>
+          <a href="#" class="mr-4 hover:underline md:mr-6">Mentions légales</a>
         </li>
         <li>
           <a href="#" class="hover:underline">Contact</a>
@@ -128,8 +126,9 @@
     </div>
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
     <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://github.com/WinstonSmith13/"
-        class="hover:underline">Medy Krouk™</a>. All Rights Reserved.
+        class="hover:underline">Medy Krouk™</a>. Tous droits réservés.
     </span>
+  </div>
   </footer>
 
 </template>
