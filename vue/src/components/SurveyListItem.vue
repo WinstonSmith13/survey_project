@@ -8,7 +8,9 @@
      bg-gray-50
      hover:bg-gray-200
      h-[470px]">
-        <img :src="survey.image_url" alt="Surveys Image" class="w-full h-48 object-cover shadow-md" />
+        <img v-if="survey.image_url" :src="survey.image_url" alt="Surveys Image" class="w-full h-48 object-cover shadow-md" />
+        <img v-else src="./../assets/Logo-MUST-400px-2.png"  alt="Surveys Image" class="w-full h-48 object-cover shadow-md" />
+        
         <h4 class="mt-4 text-lg font-bold">{{ survey.title }}</h4>
         <div v-html="survey.description" class="overflow-hidden flex-1"></div>
         <div class="flex justify-between items-center mt-3">

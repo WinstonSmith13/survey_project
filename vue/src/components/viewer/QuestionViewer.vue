@@ -1,5 +1,6 @@
 <template>
     <fieldset class="mb-4">
+        <!--Question Title-->
       <div>
         <legend class="text-base font-medium text-gray-900">
           {{ index + 1 }}. {{ question.question }}
@@ -9,6 +10,7 @@
         </p>
       </div>
       <div class="mt-3">
+
         <div v-if="question.type === 'select'">
           <select
             :value="modelValue"
@@ -21,12 +23,15 @@
             </option>
           </select>
         </div>
+
+
         <div v-else-if="question.type === 'radio'">
           <div
             v-for="(option, ind) of question.data.options"
             :key="option.uuid"
             class="flex items-center"
           >
+          <!--:name permet de selectionner qu'un seul choix. -->
             <input
               :id="option.uuid"
               :name="'question' + question.id"
@@ -43,7 +48,10 @@
             </label>
           </div>
         </div>
+
+
         <div v-else-if="question.type === 'checkbox'">
+            <pre>{{ model }}</pre>
           <div
             v-for="(option, ind) of question.data.options"
             :key="option.uuid"
@@ -87,7 +95,7 @@
   <script setup>
   import { ref } from "vue";
 
-//Ce sont les props qui sont passés par la page SurveyPublicView
+//Ce sont les props qui sont passés par la page SurveyPublic
   const { question, index, modelValue } = defineProps({
     question: Object,
     index: Number,
@@ -97,20 +105,25 @@
 
   const emits = defineEmits(["update:modelValue"]);
 
+
+  //model est utilisé pour le checkbox type, checkbox peut avoir plusieur réponse.  
   let model;
-
-
   if (question.type === "checkbox") {
     model = ref({});
   }
+
+
   function shouldHaveOptions() {
     return ["select", "radio", "checkbox"].includes(question.type);
   }
+
+
   function onCheckboxChange($event) {
     const selectedOptions = [];
-    for (let uuid in model.value) {
-      if (model.value[uuid]) {
-        selectedOptions.push(uuid);
+    for (let text in model.value) {
+
+      if (model.value[text]) {
+        selectedOptions.push(text);
       }
     }
     emits("update:modelValue", selectedOptions);

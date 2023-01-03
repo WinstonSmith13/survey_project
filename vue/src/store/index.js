@@ -103,6 +103,7 @@ const store = createStore({
           return response;
         })
     },
+    //on ne fait qu'envoyer une requete. 
     saveSurveyAnswer({ commit }, { surveyId, answers }) {
       return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },

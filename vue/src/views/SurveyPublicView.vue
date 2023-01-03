@@ -21,7 +21,8 @@
         <form v-else @submit.prevent="submitSurvey" class="container mx-auto bg-gray-100 mt-40 rounded-md p-4 shadow-md">
             <div class="grid grid-cols-6 items-center">
                 <div class="mr-4">
-                    <img :src="survey.image_url" alt="image survey" class="shadow-md" />
+                    <img v-if="survey.image_url" :src="survey.image_url" alt="image survey" class="shadow-md" />
+                    <img v-else src="./../assets/Logo-MUST-400px-2.png" :src="survey.image_url" alt="image survey" class="shadow-md" />
                 </div>
                 <div class="col-span-5">
                     <!--Title of the survey-->
@@ -85,6 +86,8 @@ store.dispatch("getSurveyBySlug", route.params.slug);
 //Création de la function SubmitSurvey.
 
 function submitSurvey() {
+
+    //We make a JSON Passing the data. 
     console.log(JSON.stringify(answers.value, undefined, 2));
     //make a request to save the answer. Avec l'action SaveSurveyAnswer.
     //We pass an object. 

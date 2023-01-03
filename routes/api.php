@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function(){
 //on passe le slug - on specifie que l'on veut survey by slug.
 Route::get('/survey-by-slug/{survey:slug}', [SurveyController::class, 'showForGuest']);
 
+
+
 //pour des raisons de sécurités toujours utiliser la méthode post pour l'inscription.
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
