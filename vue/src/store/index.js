@@ -130,8 +130,9 @@ const store = createStore({
     setCurrentSurvey: (state, survey) => {
       state.currentSurvey.data = survey.data;
     },
-    setSurveys: (state, data) => {
-      state.surveys.data = data;
+    setSurveys: (state, surveys) => {
+    
+      state.surveys.data = surveys.data;
     },
     //deconstruction pour avoir pas que DATA mais message et type. 
     notify: (state, { message, type }) => {

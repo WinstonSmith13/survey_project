@@ -20,13 +20,15 @@
       </div>
     </template>
 
-    <!--Responsive-->
-    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-      <!--We need to pass survey object as a prop-->
-      <!--Whenever delete is called we need to call deleteSurvey (mutation)-->
-      <SurveyListItem @delete="deleteSurvey(survey)" v-for="(survey, ind) in surveys.data" :key="survey.id" :survey="survey"
-        class="opacity-0 animate-fade-in-down "
-        :style="{animationDelay: `${ind * 0.1}s`}" />
+   
+    <div>
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+        <!--We need to pass survey object as a prop-->
+        <!--Whenever delete is called we need to call deleteSurvey (mutation)-->
+        <SurveyListItem @delete="deleteSurvey(survey)" v-for="(survey, ind) in surveys.data" :key="survey.id"
+          :survey="survey" class="opacity-0 animate-fade-in-down " :style="{ animationDelay: `${ind * 0.1}s` }" />
+
+      </div>
     </div>
   </PageComponent>
 </template>
@@ -41,7 +43,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 
-const surveys = computed(() => store.state.surveys.data);
+const surveys = computed(() => store.state.surveys);
 store.dispatch("getSurveys");
 
 function deleteSurvey(survey) {
