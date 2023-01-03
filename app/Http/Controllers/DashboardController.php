@@ -16,28 +16,23 @@ class DashboardController extends Controller
 
         //Total number of Surveys of the user.
 
-        $total = Survey::query()
-            ->where('user_id', $user->id)
-            ->count();
+        $total = Survey::query()->where('user_id', $user->id)->count();
 
         //Latest Survey
 
-        $latest = Survey::query()
-            ->where('user_id', $user->id)
-            ->latest('created_at')
-            ->first();
+        $latest = Survey::query()->where('user_id', $user->id)->latest('created_at')->first();
 
         //Total Number of answers
 // on fait une jointure pour trouver les reponses d'un specifique formulaire.
         $totalAnswers = SurveyAnswer::query()
-            ->join('surveys', 'survey_answers.survey.id', '=', 'surveys.id')
+            ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
             ->count();
 
         //Latest 5 Answer
 
         $latestAnswers = SurveyAnswer::query()
-            ->join('surveys', 'survey_answers.survey.id', '=', 'surveys.id')
+            ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
             ->orderBy('end_date', 'DESC')
             ->limit(5)
