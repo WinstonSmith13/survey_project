@@ -111,7 +111,13 @@
 
         <div class="flex justify-between items-center mb-3 px-2">
           <h3 class="text-2xl font-semibold">Dernières Réponses</h3>
-
+          <a
+            href="javascript:void(0)"
+            class="text-sm text-blue-500 hover:decoration-blue-500"
+          >
+            Voir les réponses
+          </a>
+ </div>
           <a
             href="#"
             v-for="answer of data.latestAnswers"
@@ -125,7 +131,7 @@
             </small>
           </a>
         
-        </div>
+        
       </div>
     </div>
 
