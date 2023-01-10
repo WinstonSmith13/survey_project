@@ -10,12 +10,12 @@ import AuthLayout from "../components/AuthLayout.vue";
 import SurveyPublicView from "../views/SurveyPublicView.vue"
 
 const routes = [
-  //Creation d'une nouvelle route pour acceder aux vues des formulaires publics. 
-  //Avec l'utilisation de la variable slug qui permet d'avoir chaque formulaires. 
+  //Creation d'une nouvelle route pour acceder aux vues des formulaires publics.
+  //Avec l'utilisation de la variable slug qui permet d'avoir chaque formulaires.
   {
-    //definition de la route 
+    //definition de la route
 path:'/view/survey/:slug',
-//definition du nom de la route 
+//definition du nom de la route
 name: 'SurveyPublicView',
 component: SurveyPublicView
   },
@@ -56,7 +56,7 @@ component: SurveyPublicView
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 router.beforeEach((to, from, next) => {
