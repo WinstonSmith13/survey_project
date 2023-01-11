@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*Permet d'éviter les erreurs relier à la sécurité des navigateurs en lien aux API */
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');

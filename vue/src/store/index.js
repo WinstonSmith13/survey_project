@@ -2,7 +2,6 @@ import { createStore } from "vuex";
 import axiosClient from "../axios";
 
 
-
 const store = createStore({
   state: {
     user: {
@@ -35,12 +34,12 @@ const store = createStore({
     getSurvey({ commit }, id) {
       //To show some loading text.
       commit("setCurrentSurveyLoading", true);
-      //Make an Http request and with the get method we pass the id. 
+      //Make an Http request and with the get method we pass the id.
       return axiosClient
         .get(`/survey/${id}`)
         .then((res) => {
           commit("setCurrentSurvey", res.data);
-          //if we get a response the loading has to stop. 
+          //if we get a response the loading has to stop.
           commit("setCurrentSurveyLoading", false);
           return res;
         })
@@ -54,7 +53,7 @@ const store = createStore({
       delete survey.image_url;
 
       let response;
-      //sur le formulaire a une id alors on est entrain de modifier un formulaire, sinon on est entrain de créer un nouveau formulaire. 
+      //sur le formulaire a une id alors on est entrain de modifier un formulaire, sinon on est entrain de créer un nouveau formulaire.
       if (survey.id) {
         response = axiosClient
           .put(`/survey/${survey.id}`, survey)
@@ -78,7 +77,7 @@ const store = createStore({
       //To show some loading text.
       commit("setSurveysLoading", true);
       return axiosClient.get("/survey").then((res) => {
-        //if we get a response the loading has to stop. 
+        //if we get a response the loading has to stop.
         commit("setSurveysLoading", false);
         commit("setSurveys", res.data);
 
@@ -108,17 +107,17 @@ const store = createStore({
           return response;
         })
     },
-    //on ne fait qu'envoyer une requete. 
+    //on ne fait qu'envoyer une requete.
     saveSurveyAnswer({ commit }, { surveyId, answers }) {
       return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },
     getSurveyBySlug({ commit }, slug) {
       commit("setCurrentSurveyLoading", true);
-      //on fait une requete http pour envoyer vers le back. 
+      //on fait une requete http pour envoyer vers le back.
       return axiosClient.get(`survey-by-slug/${slug}`).then((res) => {
         commit("setCurrentSurvey", res.data);
         commit("setCurrentSurveyLoading", false);
-        //on retourne la reponse. 
+        //on retourne la reponse.
         return res;
       })
         .catch((err) => {
@@ -173,12 +172,12 @@ const store = createStore({
 
       state.surveys.data = surveys.data;
     },
-    //deconstruction pour avoir pas que DATA mais message et type. 
+    //deconstruction pour avoir pas que DATA mais message et type.
     notify: (state, { message, type }) => {
       state.notification.show = true;
       state.notification.type = type;
       state.notification.message = message;
-      //After 3sec set the notification to false. 
+      //After 3sec set the notification to false.
       setTimeout(() => {
         state.notification.show = false;
       }, 3000)

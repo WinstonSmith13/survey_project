@@ -1,9 +1,9 @@
 <template>
-  
+
   <div>
      <img class="mx-auto h-12 w-auto" src="./../assets/Logo-MUST-400px-2.png"
-      alt="Your Company" /> 
-     
+      alt="Your Company" />
+
     <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
       Connectez-vous à votre compte</h2>
     <p class="mt-2 text-center text-sm text-gray-600">
@@ -65,7 +65,7 @@
 
 <script setup>
 
-import { LockClosedIcon } from '@heroicons/vue/20/solid'
+import { LockClosedIcon } from '@heroicons/vue/20/solid';
 import store from '../store';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
@@ -78,7 +78,7 @@ const user = {
   remember: Boolean,
 }
 
-//Création d'une variable qui va permettre d'afficher les erreurs en fonction de l'email ou du mot de passe. 
+//Création d'une variable qui va permettre d'afficher les erreurs en fonction de l'email ou du mot de passe.
 
 let errorMsg = ref('');
 
@@ -87,7 +87,7 @@ function login(ev) {
   ev.preventDefault();
   store
     .dispatch('login', user)
-    //une fois que la connexion a été faite il faut amener l'utilisateur ailleurs. 
+    //une fois que la connexion a été faite il faut amener l'utilisateur ailleurs.
     .then((res) => {
       router.push({
         name: 'Dashboard'
