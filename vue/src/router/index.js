@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
+import LegalInformation from "../views/LegalInformation.vue";
+import About from "../views/About.vue";
+import Contact from "../views/Contact.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
@@ -8,6 +11,7 @@ import SurveyView from "../views/SurveyView.vue";
 import store from "../store";
 import AuthLayout from "../components/AuthLayout.vue";
 import SurveyPublicView from "../views/SurveyPublicView.vue"
+
 
 const routes = [
   //Creation d'une nouvelle route pour acceder aux vues des formulaires publics.
@@ -26,6 +30,9 @@ component: SurveyPublicView
     meta: { requiresAuth: true },
     children: [
       { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+      { path: '/legalInformation', name: 'LegalInformation', component: LegalInformation },
+      { path: '/about', name: 'About', component: About },
+      { path: '/contact', name: 'Contact', component: Contact },
       { path: '/surveys', name: 'Surveys', component: Surveys },
       { path: '/surveys/create', name: 'SurveyCreate', component: SurveyView },
       { path: '/surveys/:id', name: 'SurveyView', component: SurveyView },

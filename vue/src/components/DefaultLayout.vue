@@ -116,15 +116,12 @@
         <img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Your Company"/>
 
         <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
-          <li>
-            <a href="#" class="mr-4 hover:underline md:mr-6 ">À propos</a>
-          </li>
-          <li>
-            <a href="#" class="mr-4 hover:underline md:mr-6">Mentions légales</a>
-          </li>
-          <li>
-            <a href="#" class="hover:underline">Contact</a>
-          </li>
+          <router-link v-for="item in footerNavigation" :key="item.name" :to="item.to" active-class="bg-gray-900 text-white"
+                       :class="[this.$route.name === item.to.name
+  ? '' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+  'block px-3 py-2 rounded-md text-base font-medium']">
+            {{ item.name }}
+          </router-link>
         </ul>
       </div>
       <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
@@ -149,6 +146,12 @@ import Notification from './Notification.vue'
 const navigation = [
   {name: 'Dashboard', to: {name: 'Dashboard'}},
   {name: 'Sondages', to: {name: 'Surveys'}},
+]
+
+const footerNavigation = [
+  {name: 'À propose', to: {name: 'About'}},
+  {name: 'Mentions légales', to: {name: 'LegalInformation'}},
+  {name: 'Contact', to: {name: 'Contact'}},
 ]
 
 
@@ -182,6 +185,7 @@ export default {
     return {
       user: computed(() => store.state.user.data),
       navigation,
+      footerNavigation,
       logout
     };
   },
