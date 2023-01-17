@@ -23,7 +23,7 @@
             <div class="grid grid-cols-6 items-center">
                 <div class="mr-4">
                     <img v-if="survey.image_url" :src="survey.image_url" alt="image survey" class="shadow-md" />
-                    <img v-else src="./../assets/Logo-MUST-400px-2.png" :src="survey.image_url" alt="image survey"
+                    <img v-else src="./../assets/Logo-MUST-400px-2.png" :src="survey.image_url" alt="logo must"
                         class="shadow-md" />
                 </div>
                 <div class="col-span-5">
@@ -68,38 +68,38 @@ import QuestionViewer from '../components/viewer/QuestionViewer.vue';
 const route = useRoute();
 const store = useStore();
 
-//Pour l'affichage du chargement. 
+//Pour l'affichage du chargement.
 
 const loading = computed(() => store.state.currentSurvey.loading);
 
-// récupération des données des formulaires. 
+// récupération des données des formulaires.
 
 const survey = computed(() => store.state.currentSurvey.data);
 
-// Création d'une variable pour l'affichage du message si le formulaire a déjà été rempli. 
+// Création d'une variable pour l'affichage du message si le formulaire a déjà été rempli.
 const surveyFinished = ref(false);
 
-// Création d'une variable pour les réponses. 
+// Création d'une variable pour les réponses.
 const answers = ref({});
 
 //On fait une requete pour recupérer les données depuis le back à travers le store de vueX.
-//Et cela à l'aide du slug que l'on a placé dans l'url. C'est une bonne manière de faire du reférencement.  
+//Et cela à l'aide du slug que l'on a placé dans l'url. C'est une bonne manière de faire du reférencement.
 store.dispatch("getSurveyBySlug", route.params.slug);
 
 //Création de la function SubmitSurvey.
 
 function submitSurvey() {
 
-    //We make a JSON Passing the data. 
+    //We make a JSON Passing the data.
     console.log(JSON.stringify(answers.value, undefined, 2));
     //make a request to save the answer. Avec l'action SaveSurveyAnswer.
-    //We pass an object. 
+    //We pass an object.
     store.dispatch(
         "saveSurveyAnswer", {
         surveyId: survey.value.id,
         answers: answers.value,
     }).then((response) => {
-        //Si on a une réponse 201 alors cela signifie que l'on a bien enregistré le formulaire dans le back. 
+        //Si on a une réponse 201 alors cela signifie que l'on a bien enregistré le formulaire dans le back.
         if (response.status === 201) {
             surveyFinished.value = true;
         };

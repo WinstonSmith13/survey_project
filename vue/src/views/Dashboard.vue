@@ -45,8 +45,8 @@
       <div class="row-span-2 animate-fade-in-down order-3 lg:order-1 bg-white shadow-md p-4">
         <h3 class="text-2xl font-semibold">Formulaire récent</h3>
         <div v-if="data.latestSurvey">
-          <img v-if="data.latestSurvey.image_url" :src="data.latestSurvey.image_url" class="w-[240px] mx-auto" alt="" />
-          <img v-else src="./../assets/Logo-MUST-400px-2.png" class="w-[240px] mx-auto" alt="" />
+          <img v-if="data.latestSurvey.image_url" :src="data.latestSurvey.image_url" class="w-[240px] mx-auto" alt="survey image" />
+          <img v-else src="./../assets/Logo-MUST-400px-2.png" class="w-[240px] mx-auto" alt="logo must" />
 
           <h3 class="font-bold text-xl mb-3">{{ data.latestSurvey.title }}</h3>
           <div class="flex justify-between text-sm mb-1">
@@ -126,12 +126,12 @@
           >
             <div class="font-semibold">{{ answer.survey.title }}</div>
             <small>
-              Réponses faites à : 
+              Réponses faites à :
               <i class="font-semibold">{{ answer.end_date }}</i>
             </small>
           </a>
-        
-        
+
+
       </div>
     </div>
 
@@ -148,7 +148,7 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 
-//computed properties from vue state store. 
+//computed properties from vue state store.
 const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 
