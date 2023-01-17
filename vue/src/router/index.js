@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import LegalInformation from "../views/LegalInformation.vue";
 import About from "../views/About.vue";
-import Contact from "../views/Contact.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
@@ -21,7 +20,8 @@ const routes = [
 path:'/view/survey/:slug',
 //definition du nom de la route
 name: 'SurveyPublicView',
-component: SurveyPublicView
+component: SurveyPublicView,
+    meta: { title: 'Affichage du formulaire' }
   },
   {
     path: '/',
@@ -29,13 +29,12 @@ component: SurveyPublicView
     component: DefaultLayout,
     meta: { requiresAuth: true },
     children: [
-      { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-      { path: '/legalInformation', name: 'LegalInformation', component: LegalInformation },
-      { path: '/about', name: 'About', component: About },
-      { path: '/contact', name: 'Contact', component: Contact },
-      { path: '/surveys', name: 'Surveys', component: Surveys },
-      { path: '/surveys/create', name: 'SurveyCreate', component: SurveyView },
-      { path: '/surveys/:id', name: 'SurveyView', component: SurveyView },
+      { path: '/dashboard', name: 'Dashboard', component: Dashboard, meta: { title: 'Tableau de bord' } },
+      { path: '/legalInformation', name: 'LegalInformation', component: LegalInformation, meta: { title: 'Mentions légales' } },
+      { path: '/about', name: 'About', component: About, meta: { title: 'A propos' } },
+      { path: '/surveys', name: 'Surveys', component: Surveys, meta: { title: 'Sondages' }  },
+      { path: '/surveys/create', name: 'SurveyCreate', component: SurveyView, meta: { title: 'Créer un sondage' } },
+      { path: '/surveys/:id', name: 'SurveyView', component: SurveyView, meta: { title: 'Afficher un sondage' } },
     ]
   },
   {
@@ -48,12 +47,14 @@ component: SurveyPublicView
       {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: Login,
+        meta: { title: 'Connexion' }
       },
       {
         path: '/register',
         name: 'Register',
-        component: Register
+        component: Register,
+        meta: { title: 'Inscription' }
       },
 
     ]
@@ -65,6 +66,12 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
+//Ajout d'un hook de navigation pour mettre à jour le titre de la page
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  next();
+});
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.state.user.token) {

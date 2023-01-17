@@ -149,9 +149,8 @@ const navigation = [
 ]
 
 const footerNavigation = [
-  {name: 'À propose', to: {name: 'About'}},
+  {name: 'À propos', to: {name: 'About'}},
   {name: 'Mentions légales', to: {name: 'LegalInformation'}},
-  {name: 'Contact', to: {name: 'Contact'}},
 ]
 
 

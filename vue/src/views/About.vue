@@ -1,61 +1,44 @@
 
   <template>
-    <div>
-      <h1>{{ associationName }}</h1>
-      <p>{{ associationDescription }}</p>
-      <h2>Objectifs</h2>
-      <ul>
-        <li v-for="goal in goals" :key="goal">{{ goal }}</li>
+    <div class="bg-white p-6">
+      <h1 class="text-2xl font-medium">Qui sommes nous ?</h1>
+      <p class="text-base text-gray-600 leading-relaxed">{{ associationDescription }}</p>
+      <h2 class="text-xl font-medium mt-4">Objectifs</h2>
+      <p class="text-base text-gray-600 leading-relaxed">{{ associationGoal }}</p>
+      <h2 class="text-xl  font-medium mt-4">Activités</h2>
+      <ul class="list-disc pl-4">
+        <li v-for="activity in activities" :key="activity" class="text-base text-gray-600 leading-relaxed">{{ activity }}</li>
       </ul>
-      <h2>Equipes</h2>
-      <ul>
-        <li v-for="team in teams" :key="team.name">
-          <h3>{{ team.name }}</h3>
-          <p>Division: {{ team.division }}</p>
-        </li>
+      <h2 class="text-xl  font-medium mt-4">Affiliations</h2>
+      <ul class="list-disc pl-4">
+        <li v-for="affiliation in affiliations" :key="affiliation" class="text-base text-gray-600 leading-relaxed">{{ affiliation }}</li>
       </ul>
-      <h2>Matchs à venir</h2>
-      <ul>
-        <li v-for="match in upcomingMatches" :key="match.id">
-          <p>{{ match.date }}</p>
-          <p>{{ match.homeTeam }} vs {{ match.awayTeam }}</p>
-        </li>
-      </ul>
-      <h2>Contact</h2>
-      <p>Email: {{ contactEmail }}</p>
-      <p>Téléphone: {{ contactPhone }}</p>
+      <h2 class="text-xl font-medium mt-4">Promotion de l'intégration</h2>
+      <p class="text-base text-gray-600 leading-relaxed">{{ integrationPromotion }}</p>
     </div>
   </template>
 
 
-<script>
-
-export default {
-  data() {
-    return {
-      associationName: 'Nom de l\'association',
-      associationDescription: 'Description de l\'association',
-      goals: [
-        'Objectif 1',
-        'Objectif 2',
-        'Objectif 3'
-      ],
-      teams: [
-        { name: 'Equipe 1', division: 'Division 1' },
-        { name: 'Equipe 2', division: 'Division 2' },
-        { name: 'Equipe 3', division: 'Division 3' }
-      ],
-      upcomingMatches: [
-        { id: 1, date: '10/01/2022', homeTeam: 'Equipe 1', awayTeam: 'Equipe 2' },
-        { id: 2, date: '17/01/2022', homeTeam: 'Equipe 3', awayTeam: 'Equipe 1' },
-        { id: 3, date: '24/01/2022', homeTeam: 'Equipe 2', awayTeam: 'Equipe 3' }
-      ],
-      contactEmail: 'contact@association.com',
-      contactPhone: '555-555-5555'
+  <script>
+  export default {
+    data() {
+      return {
+        associationDescription: 'L’association MUST (Marseille United – Sport pour Tous, association loi 1901) a été créée en janvier 2013, par un groupe d’amis qui voulaient former un groupe de footballeurs LGBT-friendly. Suite au succès de cette initiative et à l’intérêt porté à d’autres sports, l’association s’est diversifiée avec 17 activités que nous proposons aujourd’hui !',
+        associationGoal: 'L’objectif de l’association est de permettre aux adhérents de faire du sport de manière conviviale, en acceptant chacune et chacun, et indépendamment du niveau sportif. Notre credo : chacun a ses propres limites mais notre envie nous pousse à devenir meilleur·e·s.',
+        activities: [
+          'Activité 1',
+          'Activité 2',
+          'Activité 3'
+        ],
+        affiliations: [
+          'Fédération 1',
+          'Fédération 2',
+          'Fédération 3'
+        ],
+        integrationPromotion: 'MUST promeut l’intégration de toutes et tous, quelles que soient leurs différences. Bien que sa mission première concerne l’égalité homme/femme dans le sport et l’intégration LGBT, les partenariats créés depuis 2013 concernent des populations des plus diversifiées.'
+      }
     }
   }
-}
-
-</script>
+  </script>
 
 
