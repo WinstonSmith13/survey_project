@@ -43,17 +43,13 @@ class SurveyController extends Controller
     {
         //Validated() Pour récupérer toutes les données valides.
         $data = $request->validated();
-
         // Check if image was given and save on local file system
         if (isset($data['image'])) {
             $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;
         }
-
-
         //create pour la création dans db de survey
         $survey = Survey::create($data);
-
         //Create New questions.
         foreach ($data['questions'] as $question) {
             //Each question need to have survey_id to be store in the DB.
@@ -174,7 +170,6 @@ class SurveyController extends Controller
                 $this->createQuestion($question);
             }
         }
-
         // Update existing questions
         //Creating a map with id in key.
 
@@ -186,8 +181,6 @@ class SurveyController extends Controller
                 $this->updateQuestion($question, $questionMap[$question->id]);
             }
         }
-
-
         return new SurveyResource($survey);
     }
 
@@ -197,6 +190,7 @@ class SurveyController extends Controller
      * @param \App\Models\Survey $survey
      * @return \Illuminate\Http\Response
      */
+
     public function destroy(Survey $survey, Request $request)
     {
         $user = $request->user();
