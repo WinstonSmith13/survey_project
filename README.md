@@ -1,8 +1,11 @@
-<p align="center"><img src="https://github.com/WinstonSmith13/survey_project/blob/main/vue/public/Logo-MUST-400px-2-44b8af21.png" width="400" alt="Laravel Logo"></p>
+
+<h1 align="center">SURVEY MUST</h1>
 
 ## About Survey Must
 
 This application is a survey management system built with Laravel for the back-end and Vue.js for the front-end. It allows users to create, read, update and delete forms.
+<img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="200" alt="Laravel Logo">
+<img width="50" src="https://vuejs.org/images/logo.png" alt="Vue logo">
 
 ## Installation
 
