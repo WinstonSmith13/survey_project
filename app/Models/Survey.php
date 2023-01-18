@@ -25,6 +25,7 @@ class Survey extends Model
         'status',
         'description',
         'expire_date'];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
