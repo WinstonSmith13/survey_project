@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SurveyController;
+
+use App\Http\Controllers\SurveyQuestionAnswerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +32,11 @@ Route::middleware('auth:sanctum')->group(function(){
     //All the CRUD are specified using the route::resource
     Route::resource('/survey', SurveyController::class);
 
-    //as a protected route. With the index method.
+    //add a protected route. With the index method.
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    //add a protected route. With the index method.
+    Route::get('/answer', [SurveyQuestionAnswerController::class, 'index']);
 });
 
 //on specifie bien l'action pour avoir les données pour les guests

@@ -16,8 +16,8 @@ class SurveyAnswerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'survey' => new SurveyResource($this->survey),
-            'end_date' => $this->end_date
+            'survey_question_id' => new SurveyResource($this->survey),
+            'survey_answer_id' => $this->end_date
         ];
     }
 }

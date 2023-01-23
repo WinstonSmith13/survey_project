@@ -9,8 +9,8 @@ import Surveys from "../views/Surveys.vue";
 import SurveyView from "../views/SurveyView.vue";
 import store from "../store";
 import AuthLayout from "../components/AuthLayout.vue";
-import SurveyPublicView from "../views/SurveyPublicView.vue"
-
+import SurveyPublicView from "../views/SurveyPublicView.vue";
+import SurveyAnswerView from "../views/SurveyAnswerView.vue";
 
 const routes = [
   //Creation d'une nouvelle route pour acceder aux vues des formulaires publics.
@@ -35,6 +35,7 @@ component: SurveyPublicView,
       { path: '/surveys', name: 'Surveys', component: Surveys, meta: { title: 'Sondages' }  },
       { path: '/surveys/create', name: 'SurveyCreate', component: SurveyView, meta: { title: 'Créer un sondage' } },
       { path: '/surveys/:id', name: 'SurveyView', component: SurveyView, meta: { title: 'Afficher un sondage' } },
+      { path: '/answer', name: 'SurveyAnswerView', component: SurveyAnswerView, meta: { title: 'Afficher les réponses' } },
     ]
   },
   {

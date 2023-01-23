@@ -30,6 +30,13 @@ const store = createStore({
   },
   getters: {},
   actions: {
+    getUser({commit}) {
+      return axiosClient.get('/user')
+        .then(res => {
+          console.log(res);
+          commit('setUser', res.data)
+        })
+    },
     //Make an Http request
     getSurvey({ commit }, id) {
       //To show some loading text.
