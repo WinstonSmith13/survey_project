@@ -192,8 +192,8 @@ const store = createStore({
     answerViewLoading:(state, loading) =>{
       state.answersView.loading = loading;
     },
-    setAnswersViewData: (state, answer) => {
-      state.answersView.data = answer.data
+    setAnswersViewData: (state, data) => {
+      state.answersView.data = data
     },
     setCurrentSurvey: (state, survey) => {
       state.currentSurvey.data = survey.data;

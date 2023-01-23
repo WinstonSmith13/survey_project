@@ -14,7 +14,8 @@
         <span class="sr-only">Chargement...</span>
       </div>
     </div>
-    <div v-else v-for="answer in answers" :key="answer.id">
+   
+    <div v-for="answer in answers" :key="answer.id">
       {{ answer.answer }}
     </div>
 
