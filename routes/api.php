@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
     //add a protected route. With the index method.
-    Route::get('/answer', [SurveyQuestionAnswerController::class, 'index']);
+    Route::get('/answer/{id}', [SurveyQuestionAnswerController::class, 'index']);
 });
 
 //on specifie bien l'action pour avoir les données pour les guests

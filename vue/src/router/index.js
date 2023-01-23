@@ -35,7 +35,7 @@ component: SurveyPublicView,
       { path: '/surveys', name: 'Surveys', component: Surveys, meta: { title: 'Sondages' }  },
       { path: '/surveys/create', name: 'SurveyCreate', component: SurveyView, meta: { title: 'Créer un sondage' } },
       { path: '/surveys/:id', name: 'SurveyView', component: SurveyView, meta: { title: 'Afficher un sondage' } },
-      { path: '/answer', name: 'SurveyAnswerView', component: SurveyAnswerView, meta: { title: 'Afficher les réponses' } },
+      { path: '/answer/:id', name: 'SurveyAnswerView', component: SurveyAnswerView, meta: { title: 'Afficher les réponses' } },
     ]
   },
   {

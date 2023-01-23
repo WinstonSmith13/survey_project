@@ -13,6 +13,10 @@ const store = createStore({
       data: {},
     }
     ,
+    answersView: {
+      loading:false,
+      data:{},
+    },
     currentSurvey: {
       loading: false,
       data: {},
@@ -133,7 +137,7 @@ const store = createStore({
         })
     },
     getDashboardData({ commit }) {
-      commit('dashboardLoading', true)
+      commit('dashboardLoading', true);
       return axiosClient.get('/dashboard')
         .then((res) => {
           commit('dashboardLoading', false)
@@ -144,6 +148,19 @@ const store = createStore({
           commit("dashboardLoading", false);
           throw error;
         })
+    },
+    getAnswersViewData({commit}, id){
+      commit('answerViewLoading', true);
+      return axiosClient.get(`/answer/${id}`)
+      .then((res)=>{
+        commit('answerViewLoading', false)
+        commit('setAnswersViewData', res.data)
+        return res
+      })
+      .catch(error => {
+        commit('answerViewLoading', false);
+        throw error;
+      })
     },
   },
 
@@ -167,10 +184,16 @@ const store = createStore({
       state.surveys.loading = loading;
     },
     dashboardLoading:(state, loading) =>{
-      state.surveys.loading = loading;
+      state.dashboard.loading = loading;
     },
     setDashboardData: (state, data) => {
       state.dashboard.data = data
+    },
+    answerViewLoading:(state, loading) =>{
+      state.answersView.loading = loading;
+    },
+    setAnswersViewData: (state, answer) => {
+      state.answersView.data = answer.data
     },
     setCurrentSurvey: (state, survey) => {
       state.currentSurvey.data = survey.data;

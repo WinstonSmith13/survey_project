@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SurveyAnswerResource;
+use App\Models\SurveyAnswer;
 use App\Models\SurveyQuestionAnswer;
 use Illuminate\Http\Request;
 
 class SurveyQuestionAnswerController extends Controller
 {
-    public function index(Request $request)
+    public function index($id)
     {
-        $user = $request->user();
+
+        $answersId = SurveyAnswer::query()
+            ->where('survey_id', $id)
+            ->value('id');
         $answers = SurveyQuestionAnswer::query()
-            ->join('survey_answers', 'survey_question_answers.survey_answer_id', '=', 'survey_answers.id')
-            ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
-            ->where('surveys.user_id', $user->id)
-            ->select('survey_question_answers.answer')
+            ->where('survey_answer_id', $answersId)
             ->get();
 
-        return [
-            'answers' => $answers
-        ];
+        return $answers
+        ;
     }
 }

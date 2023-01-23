@@ -79,7 +79,7 @@
               </svg>
               Modifier le formulaire
             </router-link>
-            <router-link :to="{ name: 'SurveyAnswerView' }"
+            <router-link :to="{ name: 'SurveyAnswerView',params: { id: data.latestSurvey.id  } }"
               class="flex py-2 px-4 border border-transparent text-sm rounded-md  text-primary hover:bg-primary hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
