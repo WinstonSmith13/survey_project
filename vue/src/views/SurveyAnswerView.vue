@@ -17,6 +17,7 @@
             </div>
 
 
+
             <div class="px-4 py-5 sm:px-6">
                 <div v-for="survey in data.allSurveys" :key="survey.id">
                     <h3 class="text-lg font-medium  text-gray-900">
@@ -24,23 +25,32 @@
                     </h3>
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">Description : {{ survey.description }}</p>
                 </div>
-                <div class="border-t border-gray-200 mt-10">
-                    <dl>
+            </div>
+            <div class="border-t border-gray-200 px-4 py-5 sm:px-6 ">
+                <dl class="h-100 w-100 ">
+                
+
                         <h3 class="text-lg font-medium  text-gray-900 mb-8">Réponses</h3>
-                        <div v-if=data>
+                        <div class="grid grid-cols-2 gap-2" v-if="!data.answers.length">
                             <div v-for="question in data.answers" :key="question.id"
-                                class="bg-gray-100 rounded m-2  text-left">
-                                {{ question.answer}}
-                               
+                                class="bg-gray-100 rounded m-2  text-left ">
+                                
+                                <div class="flex flex-wrap">
+                                    <div v-for="answer in question" :key="answer.id"
+                                        class="bg-gray-100 rounded m-2 text-left w-1/2 p-2">
+                                        {{ answer.answer }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div v-else class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                         <div v-else class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             Pas de réponse pour ce formulaire.
                         </div>
-                    </dl>
-                </div>
+                       
+                </dl>
             </div>
         </div>
+
     </PageComponent>
 </template>
 
