@@ -19,19 +19,19 @@
 
             <div class="px-4 py-5 sm:px-6">
                 <div v-for="survey in data.allSurveys" :key="survey.id">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">
+                    <h3 class="text-lg font-medium  text-gray-900">
                         {{ survey.title }}
                     </h3>
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">Description : {{ survey.description }}</p>
                 </div>
                 <div class="border-t border-gray-200 mt-10">
                     <dl>
-                        <div>Réponses</div>
+                        <h3 class="text-lg font-medium  text-gray-900 mb-8">Réponses</h3>
                         <div v-if=data>
                             <div v-for="question in data.answers" :key="question.id"
-                                class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-
-                                <dd v-for="answer in question" :key="answer.id" class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ answer.answer}}</dd>
+                                class="bg-gray-100 rounded m-2  text-left">
+                                {{ question.answer}}
+                               
                             </div>
                         </div>
                         <div v-else class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -40,32 +40,12 @@
                     </dl>
                 </div>
             </div>
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </PageComponent>
 </template>
 
 <script setup>
 
-import { PaperClipIcon } from '@heroicons/vue/20/solid'
 import PageComponent from '../components/PageComponent.vue';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
@@ -86,7 +66,7 @@ if (route.params.id) {
     store.dispatch("getAnswersViewData", route.params.id);
 }
 
-//je fais une requête pour récuperer les datas des answers.
+
 
 
 </script>

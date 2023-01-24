@@ -19,8 +19,7 @@ class SurveyQuestionAnswerController extends Controller
             ->select('survey_question_answers.survey_question_id', 'survey_question_answers.answer')
             ->where('surveys.id', $id)
             ->where('surveys.user_id', $user->id)
-            ->get()
-            ->groupBy('survey_question_id');
+            ->get();
 
         //All Surveys
 
