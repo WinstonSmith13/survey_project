@@ -16,7 +16,7 @@ class SurveyQuestionAnswerController extends Controller
         $answers = SurveyQuestionAnswer::query()
             ->join('survey_answers', 'survey_question_answers.survey_answer_id', '=', 'survey_answers.id')
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
-            ->select('survey_question_answers.answer')
+            ->select('survey_question_answers.*')
             ->where('surveys.id', $id)
             ->where('surveys.user_id', $user->id)
             ->get();
