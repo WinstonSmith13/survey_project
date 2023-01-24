@@ -27,11 +27,11 @@
                 <div class="border-t border-gray-200 mt-10">
                     <dl>
                         <div>Réponses</div>
-                        <div v-if=data.answer>
-                            <div v-for="answer in data.answers" :key="answer.id"
+                        <div v-if=data>
+                            <div v-for="question in data.answers" :key="question.id"
                                 class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
 
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ answer.answer }}</dd>
+                                <dd v-for="answer in question" :key="answer.id" class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ answer.answer}}</dd>
                             </div>
                         </div>
                         <div v-else class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -79,6 +79,8 @@ const route = useRoute();
 const loading = computed(() => store.state.answersView.loading);
 
 const data = computed(() => store.state.answersView.data);
+
+
 //je fais une requête pour récuperer les datas des answers avec l'id
 if (route.params.id) {
     store.dispatch("getAnswersViewData", route.params.id);

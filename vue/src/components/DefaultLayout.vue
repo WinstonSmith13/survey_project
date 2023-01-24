@@ -1,12 +1,12 @@
 <template>
-    <!-- NavBar -->
+  <!-- NavBar -->
   <div class="min-h-full">
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-             <a href="/"><img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Logo Must" /></a> 
+              <a href="/"><img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Logo Must" /></a>
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
@@ -22,8 +22,6 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
-
-
               <!-- Profile dropdown -->
               <Menu as="div" class="relative ml-3">
                 <div>
@@ -43,8 +41,6 @@
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-
-
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition ease-out duration-100"
@@ -64,6 +60,8 @@
               </Menu>
             </div>
           </div>
+
+
           <div class="-mr-2 flex md:hidden">
             <!-- Mobile menu button -->
             <DisclosureButton
@@ -86,29 +84,17 @@
           </router-link>
         </div>
         <div class="border-t border-gray-700 pt-4 pb-3">
-          <div class="flex items-center px-5">
-            <div class="flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6 text-white">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <div class="mx-3">
-                <div class="text-left text-base font-medium leading-none text-white">
-                  {{ user.name }}
-                </div>
-                <div class="text-sm font-medium leading-none text-gray-400">
-                  {{ user.email }}
-                </div>
+          <div class="flex items-center px-5 ">
+            <div class="flex-shrink-0  ">
+              <div class="text-left text-base font-medium leading-none text-white ">
+                {{ user.name }}
               </div>
-
+              <div class="text-sm font-medium leading-none text-gray-400">
+                {{ user.email }}
+              </div>
             </div>
-            <div class="ml-3">
-              <div class="text-base font-medium leading-none text-white">{{ user.name }}</div>
-              <div class="text-sm font-medium leading-none text-gray-400">{{ user.email }}</div>
-            </div>
-
           </div>
+          
           <div class="mt-3 space-y-1 px-2">
             <DisclosureButton as="a" @click="logout"
               class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer">
@@ -119,10 +105,11 @@
       </DisclosurePanel>
     </Disclosure>
     <router-view></router-view>
+
     <Notification />
   </div>
 
-<!-- Footer -->
+  <!-- Footer -->
   <footer class="p-4 bg-white shadow md:px-6 md:py-8 dark:bg-gray-900 ">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center sm:justify-between">
