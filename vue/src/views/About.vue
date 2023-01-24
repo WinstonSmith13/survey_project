@@ -1,7 +1,7 @@
 
   <template>
 
-    <div class="bg-white p-6 mb-40 ">
+    <div class="bg-white shadow-md p-10 text-left flex flex-col ">
       <h1 class="text-2xl font-medium">Qui sommes nous ?</h1>
       <p class="text-base text-gray-600 leading-relaxed">{{ associationDescription }}</p>
       <h2 class="text-xl font-medium mt-4">Objectifs</h2>

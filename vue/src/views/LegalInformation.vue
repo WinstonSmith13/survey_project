@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-6 mb-40">
+  <div class="bg-white shadow-md p-10 text-left flex flex-col">
     <h2 class="text-lg font-medium text-gray-700">Mentions légales</h2>
     <p class="text-gray-600"> ©Must 2023 Tous droits réservés.</p>
     <p class="text-gray-600">Ce site est sous la juridiction de la loi française, le copyright international et la protection de la propriété intellectuelle.</p>

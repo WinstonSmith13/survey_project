@@ -1,5 +1,5 @@
 <template>
-  <PageComponent title="Dashboard" >
+  <PageComponent title="Dashboard">
     <!-- <pre>{{ loading }}</pre>
     <pre>{{ data}}</pre> -->
     <div v-if="loading" class="flex justify-center ">
@@ -17,12 +17,12 @@
       </div>
     </div>
     <!--Responsive for the mobile-->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700 mb-60">
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700 mb-10">
       <!--Total Surveys-->
 
       <div class="bg-white shadow-md p-3 text-center flex flex-col animate-fade-in-down order-1 lg:order-2"
         style="animation-delay: 0.1s">
-        <h3 class="text-2xl font-semibold">Tous les formulaires</h3>
+        <h3 class="text-2xl font-semibold">Nombre total de sondages</h3>
         <div class="text-8xl pb-4 font-semibold flex-1 flex items-center justify-center">
           {{ data.totalSurveys }}
         </div>
@@ -36,16 +36,17 @@
         style="animation-delay: 0.2s">
         <h3 class="text-2xl font-semibold">Réponses totales</h3>
         <div class="text-8xl pb-4 font-semibold flex-1 flex items-center justify-center">
-          {{ data.totalAnswers}}
+          {{ data.totalAnswers }}
         </div>
 
       </div>
 
       <!--Latest Surveys-->
       <div class="row-span-2 animate-fade-in-down order-3 lg:order-1 bg-white shadow-md p-4">
-        <h3 class="text-2xl font-semibold">Formulaire récent</h3>
+        <h3 class="text-2xl font-semibold">Sondage récent</h3>
         <div v-if="data.latestSurvey">
-          <img v-if="data.latestSurvey.image_url" :src="data.latestSurvey.image_url" class="w-[240px] mx-auto" alt="survey image" />
+          <img v-if="data.latestSurvey.image_url" :src="data.latestSurvey.image_url" class="w-[240px] mx-auto"
+            alt="survey image" />
           <img v-else src="./../assets/Logo-MUST-400px-2.png" class="w-[240px] mx-auto" alt="logo must" />
 
           <h3 class="font-bold text-xl mb-3">{{ data.latestSurvey.title }}</h3>
@@ -79,19 +80,7 @@
               </svg>
               Modifier le formulaire
             </router-link>
-            <router-link :to="{ name: 'SurveyAnswerView',params: { id: data.latestSurvey.id  } }"
-              class="flex py-2 px-4 border border-transparent text-sm rounded-md  text-primary hover:bg-primary hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
-              Afficher les réponses du formulaire
-            </router-link>
-            
-            
-
-            <!-- <button
+            <router-link :to="{ name: 'SurveyAnswerView', params: { id: data.latestSurvey.id } }"
               class="flex py-2 px-4 border border-transparent text-sm rounded-md  text-primary hover:bg-primary hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -100,8 +89,11 @@
                   clip-rule="evenodd" />
               </svg>
               Afficher les réponses
-            </button> -->
+            </router-link>
 
+
+
+        
 
           </div>
 
@@ -121,28 +113,26 @@
         style="animation-delay: 0.3s">
 
         <div class="flex justify-between items-center mb-3 px-2">
-          <h3 class="text-2xl font-semibold">Dernières Réponses</h3>
-          <a
-            href="javascript:void(0)"
-            class="text-sm text-blue-500 hover:decoration-blue-500"
-          >
-            Voir les réponses
-          </a>
- </div>
- <!--
-          <a
-            href="#"
-            v-for="answer of data.latestAnswers"
-            :key="answer.id"
-            class="block p-2 hover:bg-gray-100/90"
-          >
-            <div class="font-semibold">{{ answer.survey.title }}</div>
-            <small>
-              Réponses faites à :
-              <i class="font-semibold">{{ answer.end_date }}</i>
-            </small>
-          </a>
--->
+          <h3 class="text-2xl font-semibold">Tous vos sondages</h3>
+
+        </div>
+
+        <div v-for="answer of data.allSurveys" :key="answer.id" class="block p-2">
+          <div class="font-semibold">{{answer.title}}</div>
+          
+          
+          <router-link :to="{ name: 'SurveyAnswerView', params: { id: answer.id } }"
+              class="flex py-2 px-4 border border-transparent text-sm rounded-md  text-primary hover:bg-primary hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path fill-rule="evenodd"
+                  d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Afficher les réponses
+            </router-link>
+          </div>
+
 
       </div>
     </div>

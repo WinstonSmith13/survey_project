@@ -1,4 +1,5 @@
 <template>
+    <!-- NavBar -->
   <div class="min-h-full">
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -118,17 +119,15 @@
       </DisclosurePanel>
     </Disclosure>
     <router-view></router-view>
-
     <Notification />
-
   </div>
 
-
+<!-- Footer -->
   <footer class="p-4 bg-white shadow md:px-6 md:py-8 dark:bg-gray-900 ">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center sm:justify-between">
 
-        <img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Your Company" />
+        <a href="/"><img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Logo Must" /></a>
 
         <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
           <router-link v-for="item in footerNavigation" :key="item.name" :to="item.to"

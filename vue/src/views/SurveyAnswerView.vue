@@ -14,9 +14,13 @@
         <span class="sr-only">Chargement...</span>
       </div>
     </div>
+
+    <div v-for="survey in data.allSurveys" :key="survey.id">
+      {{ survey }}
+    </div>
    
-    <div v-for="answer in answers" :key="answer.id">
-      {{ answer.answer }}
+    <div v-for="answer in data.answers" :key="answer.id">
+      {{ answer }}
     </div>
 
    </PageComponent>
@@ -36,7 +40,7 @@ const route = useRoute();
 //computed const from store state
 const loading = computed(()=> store.state.answersView.loading);
 
-const answers = computed(()=> store.state.answersView.data);
+const data = computed(()=> store.state.answersView.data);
 //je fais une requête pour récuperer les datas des answers avec l'id
 if (route.params.id){
     store.dispatch("getAnswersViewData", route.params.id );

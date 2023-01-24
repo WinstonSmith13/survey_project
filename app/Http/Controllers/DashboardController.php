@@ -38,10 +38,15 @@ class DashboardController extends Controller
             ->limit(5)
             ->getModels('survey_answers.*');
 
+        //All Surveys
+
+        $allSurveys = Survey::query()->where('user_id', $user->id)->get();
+
         return [
             'totalSurveys' => $total,
             'latestSurvey' => $latest ? new SurveyResourceDashboard($latest) : null,
             'totalAnswers' => $totalAnswers,
+            'allSurveys' => $allSurveys,
             'latestAnswers' => SurveyAnswerResource::collection($latestAnswers)
         ];
     }
