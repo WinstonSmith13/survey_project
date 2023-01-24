@@ -5,7 +5,7 @@
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Logo Must" />
+             <a href="/"><img class="h-8 w-24" src="./../assets/Logo-MUST-400px-2.png" alt="Logo Must" /></a> 
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">

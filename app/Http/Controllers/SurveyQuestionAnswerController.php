@@ -11,15 +11,12 @@ class SurveyQuestionAnswerController extends Controller
 {
     public function index($id)
     {
-
-        $answersId = SurveyAnswer::query()
-            ->where('survey_id', $id)
-            ->value('id');
-        $answers = SurveyQuestionAnswer::query()
-            ->where('survey_answer_id', $answersId)
-            ->get();
-
-        return $answers
+        return SurveyQuestionAnswer::query()
+            ->join('survey_answers', 'survey_question_answers.survey_answer_id', '=', 'survey_answers.id')
+            ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
+            ->select('survey_question_answers.answer')
+            ->where('surveys.id', $id)
+            ->get()
         ;
     }
 }
