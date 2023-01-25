@@ -31,21 +31,19 @@
                 
 
                         <h3 class="text-lg font-medium  text-gray-900 mb-8">Réponses</h3>
-                        <div class="grid grid-cols-2 gap-2" v-if="!data.answers.length">
+                        <div class="grid grid-cols-2 gap-2" >
                             <div v-for="question in data.answers" :key="question.id"
                                 class="bg-gray-100 rounded m-2  text-left ">
                                 
                                 <div class="flex flex-wrap">
-                                    <div v-for="answer in question" :key="answer.id"
+                                    <div v-for="(answer, index) in question" :key="answer.id"
                                         class="bg-gray-100 rounded m-2 text-left w-1/2 p-2">
-                                        {{ answer.answer }}
+                                        {{ index + 1 }}. {{ answer.answer }}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                         <div v-else class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                            Pas de réponse pour ce formulaire.
-                        </div>
+                        
                        
                 </dl>
             </div>
