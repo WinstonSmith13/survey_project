@@ -17,7 +17,7 @@
       </div>
     </div>
     <!--Responsive for the mobile-->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700 mb-10">
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700 ">
       <!--Total Surveys-->
 
       <div class="bg-white shadow-md p-3 text-center flex flex-col animate-fade-in-down order-1 lg:order-2"
@@ -93,7 +93,7 @@
 
 
 
-        
+
 
           </div>
 
@@ -119,8 +119,8 @@
 
         <div v-for="answer of data.allSurveys" :key="answer.id" class="block p-2">
           <div class="font-semibold">{{answer.title}}</div>
-          
-          
+
+
           <router-link :to="{ name: 'SurveyAnswerView', params: { id: answer.id } }"
               class="flex py-2 px-4 border border-transparent text-sm rounded-md  text-primary hover:bg-primary hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">

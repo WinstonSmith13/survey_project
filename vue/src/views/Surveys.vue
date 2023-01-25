@@ -21,20 +21,31 @@
     </template>
 
 
-    <div>
-      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-        <!--We need to pass survey object as a prop-->
-        <!--Whenever delete is called we need to call deleteSurvey (mutation)-->
-        <SurveyListItem
-          @delete="deleteSurvey(survey)"
-          v-for="(survey, ind) in surveys.data"
-          :key="survey.id"
-          :survey="survey"
-          class="opacity-0 animate-fade-in-down "
-          :style="{ animationDelay: `${ind * 0.1}s` }" />
 
+
+
+
+    
+    
+    <div>
+    <div v-if="surveys.data.length > 0" class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <!--We need to pass survey object as a prop-->
+      <!--Whenever delete is called we need to call deleteSurvey (mutation)-->
+      <SurveyListItem
+        @delete="deleteSurvey(survey)"
+        v-for="(survey, ind) in surveys.data"
+        :key="survey.id"
+        :survey="survey"
+        class="opacity-0 animate-fade-in-down "
+        :style="{ animationDelay: `${ind * 0.1}s` }" />
+    </div>
+    <div v-else>
+      <div class="flex justify-center items-center">
+        <p class="text-center font-bold">Vous n'avez pas encore de formulaires créés.</p>
       </div>
     </div>
+  </div>
+    
   </PageComponent>
 </template>
 
