@@ -26,19 +26,15 @@
         <div class="text-8xl pb-4 font-semibold flex-1 flex items-center justify-center">
           {{ data.totalSurveys }}
         </div>
-
-
       </div>
 
       <!--Total Answers-->
-
       <div class="bg-white shadow-md p-3 text-center flex flex-col order-2 lg:order-4 animate-fade-in-down m-4"
         style="animation-delay: 0.2s">
         <h3 class="text-2xl font-semibold">Réponses totales</h3>
         <div class="text-8xl pb-4 font-semibold flex-1 flex items-center justify-center">
           {{ data.totalAnswers }}
         </div>
-
       </div>
 
       <!--Latest Surveys-->
@@ -62,10 +58,7 @@
             <div>Status:</div>
             <div>{{ data.latestSurvey.status ? "Active" : "Draft" }}</div>
           </div>
-          <!-- <div class="flex justify-between text-sm mb-1">
-            <div>Questions:</div>
-            <div>{{ data.latestSurvey.questions}}</div>
-          </div> -->
+
           <div class="flex justify-between text-sm mb-3">
             <div>Réponses:</div>
             <div>{{ data.latestSurvey.answers }}</div>
@@ -90,57 +83,42 @@
               </svg>
               Afficher les réponses
             </router-link>
-
-
-
-
-
           </div>
-
-
         </div>
         <div v-else class="text-gray-600 text-center py-16">
           Vous n'avez pas encore de formulaire.
         </div>
-
       </div>
 
-
-
-      <!--Latest answers-->
+      <!--All the surveys-->
 
       <div class="bg-white shadow-md p-3 row-span-2 order-4 lg:order-3 animate-fade-in-down"
         style="animation-delay: 0.3s">
 
         <div class="flex justify-between items-center mb-3 px-2">
           <h3 class="text-2xl font-semibold">Tous vos sondages</h3>
-
         </div>
-
-        <div v-for="answer of data.allSurveys" :key="answer.id" class="block p-2">
-          <div class="font-semibold">{{answer.title}}</div>
-
+        <div v-if="data.allSurveys.length > 0" v-for="answer of data.allSurveys" :key="answer.id" class="block p-2">
+          <div class="font-semibold">{{ answer.title }}</div>
 
           <router-link :to="{ name: 'SurveyAnswerView', params: { id: answer.id } }"
-              class="flex py-2 px-4 border border-transparent text-sm rounded-md  text-primary hover:bg-primary hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                <path fill-rule="evenodd"
-                  d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                  clip-rule="evenodd" />
-              </svg>
-              Afficher les réponses
-            </router-link>
-          </div>
-
-
+            class="flex py-2 px-4 border border-transparent text-sm rounded-md  text-primary hover:bg-primary hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fill-rule="evenodd"
+                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                clip-rule="evenodd" />
+            </svg>
+            Afficher les réponses
+          </router-link>
+        </div>
+        <div v-else class="text-gray-600 text-center py-16">
+          Vous n'avez pas encore de formulaire.
+        </div>
       </div>
+
     </div>
-
-
-
   </PageComponent>
-
 </template>
 
 <script setup>
