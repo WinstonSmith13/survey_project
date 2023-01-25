@@ -28,23 +28,23 @@
             </div>
             <div class="border-t border-gray-200 px-4 py-5 sm:px-6 ">
                 <dl class="h-100 w-100 ">
-                
 
-                        <h3 class="text-lg font-medium  text-gray-900 mb-8">Réponses</h3>
-                        <div class="grid grid-cols-2 gap-2" >
-                            <div v-for="question in data.answers" :key="question.id"
-                                class="bg-gray-100 rounded m-2  text-left ">
-                                
-                                <div class="flex flex-wrap">
-                                    <div v-for="(answer, index) in question" :key="answer.id"
-                                        class="bg-gray-100 rounded m-2 text-left w-1/2 p-2">
-                                        {{ index + 1 }}. {{ answer.answer }}
-                                    </div>
+
+                    <h3 class="text-lg font-medium  text-gray-900 mb-8">Réponses</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div v-for="question in data.answers" :key="question.id"
+                            class="bg-gray-100 rounded m-2  text-left ">
+
+                            <div class="flex flex-wrap">
+                                <div v-for="(answer, index) in question" :key="answer.id"
+                                    class="bg-gray-100 rounded m-2 text-left w-1/2 p-2">
+                                    {{ index + 1 }}. {{ answer.answer }}
                                 </div>
                             </div>
                         </div>
-                        
-                       
+                    </div>
+
+
                 </dl>
             </div>
         </div>
