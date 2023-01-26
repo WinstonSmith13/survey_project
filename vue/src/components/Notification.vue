@@ -8,7 +8,6 @@
 
 
 <script setup>
-//composition API.
 import {computed} from 'vue';
 import {useStore} from 'vuex';
 
