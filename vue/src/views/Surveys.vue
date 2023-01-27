@@ -84,3 +84,6 @@ function deleteSurvey(survey) {
   }
 }
 </script>
+
+<style>
+</style>

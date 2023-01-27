@@ -110,8 +110,7 @@ function submitAnotherResponse() {
     answers.value = {};
     surveyFinished.value = false;
 }
-
-
-
 </script>
 
+<style>
+</style>
