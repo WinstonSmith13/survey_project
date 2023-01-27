@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-flow-row h-screen">
+  <div class="grid grid-flow-row h-screen ">
     <!-- NavBar -->
     <NavigationBarTemplate />
     <router-view />

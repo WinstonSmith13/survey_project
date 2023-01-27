@@ -28,8 +28,6 @@
             </div>
             <div class="border-t border-gray-200 px-4 py-5 sm:px-6 ">
                 <dl class="h-100 w-100 ">
-
-
                     <h3 class="text-lg font-medium  text-gray-900 mb-8">Réponses</h3>
                     <div class="grid grid-cols-2 gap-2">
                         <div v-for="question in data.answers" :key="question.id"
@@ -39,14 +37,20 @@
                                 <div v-for="(answer, index) in question" :key="answer.id"
                                     class="bg-gray-100 rounded m-2 text-left w-1/2 p-2">
                                     {{ index + 1 }}. {{ answer.answer }}
+                                    <hr/>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </dl>
+                <router-link to="/Dashboard">
+                        <button type="button"
+                            class="inline-flex justify-center rounded-md border border-gray-300 bg-primary py-2 px-4 text-sm font-medium text-white hover:text-white shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 mx-2">
+                            Retour
+                        </button>
+                    </router-link>
             </div>
+            
         </div>
 
     </PageComponent>
@@ -63,13 +67,12 @@ const store = useStore();
 const route = useRoute();
 
 
-//computed const from store state
+// computed const from store state
 const loading = computed(() => store.state.answersView.loading);
 
 const data = computed(() => store.state.answersView.data);
 
-
-//je fais une requête pour récuperer les datas des answers avec l'id
+// je fais une requête pour récuperer les datas des answers avec l'id
 if (route.params.id) {
     store.dispatch("getAnswersViewData", route.params.id);
 }

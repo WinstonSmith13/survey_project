@@ -40,8 +40,8 @@
 
 
     
-    <div v-else>
-    <div v-if="surveys.data.length > 0" class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+    <div v-else class="h-screen">
+    <div v-if="surveys.data.length > 0" class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 ">
       <!--We need to pass survey object as a prop-->
       <!--Whenever delete is called we need to call deleteSurvey (mutation)-->
       <SurveyListItem

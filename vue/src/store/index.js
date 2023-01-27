@@ -1,6 +1,6 @@
+/* eslint-disable no-undef */
 import { createStore } from "vuex";
 import axiosClient from "../axios";
-
 
 const store = createStore({
   state: {
@@ -11,11 +11,10 @@ const store = createStore({
     dashboard: {
       loading: false,
       data: {},
-    }
-    ,
+    },
     answersView: {
-      loading:false,
-      data:{},
+      loading: false,
+      data: {},
     },
     currentSurvey: {
       loading: false,
@@ -29,28 +28,27 @@ const store = createStore({
     notification: {
       show: false,
       type: null,
-      message: null
+      message: null,
     },
   },
   getters: {},
   actions: {
-    getUser({commit}) {
-      return axiosClient.get('/user')
-        .then(res => {
-          console.log(res);
-          commit('setUser', res.data)
-        })
+    getUser({ commit }) {
+      return axiosClient.get("/user").then((res) => {
+        console.log(res);
+        commit("setUser", res.data);
+      });
     },
-    //Make an Http request
+    // Make an Http request
     getSurvey({ commit }, id) {
-      //To show some loading text.
+      // To show some loading animation.
       commit("setCurrentSurveyLoading", true);
-      //Make an Http request and with the get method we pass the id.
+      // Make an Http request and with the get method we pass the id.
       return axiosClient
         .get(`/survey/${id}`)
         .then((res) => {
           commit("setCurrentSurvey", res.data);
-          //if we get a response the loading has to stop.
+          // if we get a response the loading has to stop.
           commit("setCurrentSurveyLoading", false);
           return res;
         })
@@ -60,107 +58,107 @@ const store = createStore({
         });
     },
     saveSurvey({ commit }, survey) {
-
       delete survey.image_url;
 
       let response;
-      //sur le formulaire a une id alors on est entrain de modifier un formulaire, sinon on est entrain de créer un nouveau formulaire.
+      // sur le formulaire a une id alors on est entrain de modifier un formulaire, sinon on est entrain de créer un nouveau formulaire.
       if (survey.id) {
         response = axiosClient
           .put(`/survey/${survey.id}`, survey)
           .then((res) => {
-            commit('setCurrentSurvey', res.data)
+            commit("setCurrentSurvey", res.data);
             return res;
           });
       } else {
         response = axiosClient.post("/survey", survey).then((res) => {
-          commit('setCurrentSurvey', res.data)
+          commit("setCurrentSurvey", res.data);
           return res;
         });
       }
 
       return response;
     },
-    deleteSurvey({ }, id) {
+    deleteSurvey(id) {
       return axiosClient.delete(`/survey/${id}`);
     },
     getSurveys({ commit }) {
-      //To show some loading text.
+      // To show some loading text.
       commit("setSurveysLoading", true);
       return axiosClient.get("/survey").then((res) => {
-        //if we get a response the loading has to stop.
+        // If we get a response the loading has to stop.
         commit("setSurveysLoading", false);
         commit("setSurveys", res.data);
 
         return res;
-      })
+      });
     },
     register({ commit }, user) {
-      return axiosClient.post('/register', user)
-        .then(({ data }) => {
-          commit('setUser', data.user);
-          commit('setToken', data.token)
-          return data;
-        })
+      return axiosClient.post("/register", user).then(({ data }) => {
+        commit("setUser", data.user);
+        commit("setToken", data.token);
+        return data;
+      });
     },
     login({ commit }, user) {
-      return axiosClient.post('/login', user)
-        .then(({ data }) => {
-          commit('setUser', data.user);
-          commit('setToken', data.token)
-          return data;
-        })
+      return axiosClient.post("/login", user).then(({ data }) => {
+        commit("setUser", data.user);
+        commit("setToken", data.token);
+        return data;
+      });
     },
     logout({ commit }) {
-      return axiosClient.post('/logout')
-        .then(response => {
-          commit('logout')
-          return response;
-        })
+      return axiosClient.post("/logout").then((response) => {
+        commit("logout");
+        return response;
+      });
     },
-    //on ne fait qu'envoyer une requete.
+    // on ne fait qu'envoyer une requete.
     saveSurveyAnswer({ commit }, { surveyId, answers }) {
       return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },
     getSurveyBySlug({ commit }, slug) {
       commit("setCurrentSurveyLoading", true);
-      //on fait une requete http pour envoyer vers le back.
-      return axiosClient.get(`survey-by-slug/${slug}`).then((res) => {
-        commit("setCurrentSurvey", res.data);
-        commit("setCurrentSurveyLoading", false);
-        //on retourne la reponse.
-        return res;
-      })
+      // on fait une requete http pour envoyer vers le back.
+      return axiosClient
+        .get(`survey-by-slug/${slug}`)
+        .then((res) => {
+          commit("setCurrentSurvey", res.data);
+          commit("setCurrentSurveyLoading", false);
+          // on retourne la reponse.
+          return res;
+        })
         .catch((err) => {
           commit("setCurrentSurveyLoading", false);
           throw err;
-        })
+        });
     },
     getDashboardData({ commit }) {
-      commit('dashboardLoading', true);
-      return axiosClient.get('/dashboard')
+      commit("dashboardLoading", true);
+      return axiosClient
+        .get("/dashboard")
         .then((res) => {
-          commit('dashboardLoading', false)
-          commit('setDashboardData', res.data)
-          return res
+          commit("dashboardLoading", false);
+          commit("setDashboardData", res.data);
+          return res;
         })
-        .catch(error => {
+        .catch((error) => {
           commit("dashboardLoading", false);
           throw error;
-        })
+        });
     },
-    getAnswersViewData({commit}, id){
-      commit('answerViewLoading', true);
-      return axiosClient.get(`/answer/${id}`)
-      .then((res)=>{
-        commit('answerViewLoading', false)
-        commit('setAnswersViewData', res.data)
-        return res
-      })
-      .catch(error => {
-        commit('answerViewLoading', false);
-        throw error;
-      })
+    getAnswersViewData({ commit }, id) {
+      commit("answerViewLoading", true);
+      return axiosClient
+        .get(`/answer/${id}`)
+        .then((res) => {
+          commit("answerViewLoading", false);
+          commit("setAnswersViewData", res.data);
+          return res;
+        })
+        .catch((error) => {
+          commit("answerViewLoading", false);
+          throw error;
+        });
     },
   },
 
@@ -175,7 +173,7 @@ const store = createStore({
     },
     setToken: (state, token) => {
       state.user.token = token;
-      sessionStorage.setItem('TOKEN', token);
+      sessionStorage.setItem("TOKEN", token);
     },
     setCurrentSurveyLoading: (state, loading) => {
       state.currentSurvey.loading = loading;
@@ -183,37 +181,36 @@ const store = createStore({
     setSurveysLoading: (state, loading) => {
       state.surveys.loading = loading;
     },
-    dashboardLoading:(state, loading) =>{
+    dashboardLoading: (state, loading) => {
       state.dashboard.loading = loading;
     },
     setDashboardData: (state, data) => {
-      state.dashboard.data = data
+      state.dashboard.data = data;
     },
-    answerViewLoading:(state, loading) =>{
+    answerViewLoading: (state, loading) => {
       state.answersView.loading = loading;
     },
     setAnswersViewData: (state, data) => {
-      state.answersView.data = data
+      state.answersView.data = data;
     },
     setCurrentSurvey: (state, survey) => {
       state.currentSurvey.data = survey.data;
     },
     setSurveys: (state, surveys) => {
-
       state.surveys.data = surveys.data;
     },
-    //deconstruction pour avoir pas que DATA mais message et type.
+    // deconstruction pour avoir pas que DATA mais message et type.
     notify: (state, { message, type }) => {
       state.notification.show = true;
       state.notification.type = type;
       state.notification.message = message;
-      //After 3sec set the notification to false.
+      // After 3sec set the notification to false.
       setTimeout(() => {
         state.notification.show = false;
-      }, 3000)
-    }
+      }, 3000);
+    },
   },
-  modules: {}
-})
+  modules: {},
+});
 
 export default store;

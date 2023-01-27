@@ -120,17 +120,12 @@
                     </div>
                     <div v-for="(question, index) in model.questions" :key="question.id">
                         <!--On ecoute les changements dans l'éditeur de questions grace aux emits.-->
-                        <QuestionEditorVue :question="question" :index="index" @change="questionChange" @addQuestion="addQuestion" @deleteQuestion="deleteQuestion"></QuestionEditorVue>
-                        
-
+                        <QuestionEditorVue :question="question" :index="index" @change="questionChange"
+                            @addQuestion="addQuestion" @deleteQuestion="deleteQuestion"></QuestionEditorVue>
                     </div>
-
                 </div>
                 <!--/Question-->
-
-
                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-
                     <router-link to="/Surveys">
                         <button type="button"
                             class="inline-flex justify-center rounded-md border border-gray-300 bg-transparent py-2 px-4 text-sm font-medium text-black hover:text-white shadow-sm hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 mx-2">
@@ -236,7 +231,7 @@ function questionChange(question) {
 
 function saveSurvey() {
     store.dispatch("saveSurvey", model.value).then(({ data }) => {
-        store.commit('notify',{
+        store.commit('notify', {
             type: 'success',
             message: 'Le formulaire a bien été créé.'
         })

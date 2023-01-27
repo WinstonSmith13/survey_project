@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white shadow-md p-10 text-left flex flex-col">
+  <div class="bg-white shadow-md p-10 text-left flex flex-col mx-auto  max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
     <h2 class="text-lg font-medium text-gray-700">Mentions légales</h2>
-    <p class="text-gray-600"> ©Must 2023 Tous droits réservés.</p>
+    <p class="text-gray-600"> ©SurveyMust 2023 Tous droits réservés.</p>
     <p class="text-gray-600">Ce site est sous la juridiction de la loi française, le copyright international et la protection de la propriété intellectuelle.</p>
     <p class="text-gray-600">Toute reproduction, utilisation ou altération de tout ou partie des contenus de ce site sont interdites.</p>
     <p class="text-gray-600">Les liens hypertextes vers le site internet de Survey Must ne peuvent être établis sans l’autorisation écrite de Survey Must.</p>
