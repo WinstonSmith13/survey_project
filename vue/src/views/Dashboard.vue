@@ -1,7 +1,6 @@
 <template>
   <PageComponent title="Dashboard">
-    <!-- <pre>{{ loading }}</pre>
-    <pre>{{ data}}</pre> -->
+   
     <div v-if="loading" class="flex justify-center ">
       <div role="status">
         <svg class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
@@ -135,3 +134,5 @@ const data = computed(() => store.state.dashboard.data);
 store.dispatch("getDashboardData");
 
 </script>
+<style>
+</style>
