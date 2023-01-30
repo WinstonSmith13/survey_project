@@ -21,109 +21,132 @@ use App\Http\Requests\StoreSurveyAnswerRequest;
 class SurveyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the user's surveys.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
+        // Get the authenticated user
         $user = $request->user();
-        //on the survey model, paginate for the pagination on the app.
-        //Because we created Survey Ressources for the api we need to
+
+        // Retrieve the surveys for the authenticated user, ordered by creation date (most recent first), and paginated
         return SurveyResource::collection(Survey::where('user_id', $user->id)->orderBy('created_at', 'DESC')->paginate(10));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created survey in storage.
      *
-     * @param \App\Http\Requests\StoreSurveyRequest $request
-     * @return \Illuminate\Http\Response
+     * @param StoreSurveyRequest $request - instance of StoreSurveyRequest with request data
+     * @return \Illuminate\Http\Response - response object
      */
     public function store(StoreSurveyRequest $request)
     {
-        //Validated() Pour récupérer toutes les données valides.
+        // Get validated data from the request
         $data = $request->validated();
-        // Check if image was given and save on local file system
+
+        // Check and save image if provided
         if (isset($data['image'])) {
             $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;
         }
-        //create pour la création dans db de survey
+
+        // Create new survey record in database
         $survey = Survey::create($data);
-        //Create New questions.
+
+        // Create new questions for the survey
         foreach ($data['questions'] as $question) {
-            //Each question need to have survey_id to be store in the DB.
             $question['survey_id'] = $survey->id;
             $this->createQuestion($question);
         }
 
+        // Return newly created survey
         return new SurveyResource($survey);
     }
 
     /**
-     * Display the specified resource.
+     * Show specified survey.
      *
-     * @param \App\Models\Survey $survey
+     * @param Survey $survey, Request $request
      * @return \Illuminate\Http\Response
      */
     public function show(Survey $survey, Request $request)
     {
+        // Fetch user from request.
         $user = $request->user();
-        //Si le l'utilisateur auth n'est pas égale à l'utilisateur du formulaire alors cela veut dire que la personne auth est différente de l'utilisateur qui a créer le formulaire.
-        if ($user->id !== $survey->user_id) {
+
+        // Check if current user is owner of the survey.
+        if ($user->id != $survey->user_id) {
+            // Return 403 if unauthorized.
             return abort(403, 'Unauthorized action.');
         }
+
+        // Return survey resource.
         return new SurveyResource($survey);
     }
 
     /**
-     * Display the specified resource.
+     * Display specified survey for guest.
      *
      * @param \App\Models\Survey $survey
      * @return \Illuminate\Http\Response
      */
     public function showForGuest(Survey $survey)
     {
+        // Returns survey resource for guest.
         return new SurveyResource($survey);
     }
 
 
-    //We accept survey Model.
-    //Mais aussi answerRequest.
+    // Store survey answer by creating a new record in the SurveyAnswer table
+
+    /**
+     * Store survey answer.
+     * @param \App\Http\Requests\StoreSurveyAnswerRequest $request
+     * @param \App\Models\Survey $survey
+     * @return \Illuminate\Http\Response
+     */
+
     public function storeAnswer(StoreSurveyAnswerRequest $request, Survey $survey)
     {
-//we need to take the validated data from the request.
+        // Validate request data
         $validated = $request->validated();
 
+        // Create new survey answer record
         $surveyAnswer = SurveyAnswer::create([
-            //what we pass in the data.
             'survey_id' => $survey->id,
             'start_date' => date('Y-m-d H:i:s'),
-            'end_date' => date('Y-m-d H:i:s'),
+            'end_date' => date('Y-m-d H:i:s')
         ]);
 
-        //We interate on the validated answer.
-        // Key Question id - valeurs Answer.
-        //Associated id
+        // Loop through each answer and create new survey question answer records
         foreach ($validated['answers'] as $questionId => $answer) {
-            //on verifie que la réponse fait bien du formulaire.
-            //pour cela on questionne la database.
-            $question = SurveyQuestion::where(['id' => $questionId, 'survey_id' => $survey->id])->get();
+
+            // Verify that the answer is part of the survey
+            $question = SurveyQuestion::where([
+                'id' => $questionId,
+                'survey_id' => $survey->id
+            ])->get();
+
+            // If question doesn't exist, return error response
             if (!$question) {
                 return response("Invalid question ID: \"$questionId\"", 400);
             }
-            //If condition true we continue and we save data in the array.
+
+            // Save answer data if question exists
             $data = [
                 'survey_question_id' => $questionId,
                 'survey_answer_id' => $surveyAnswer->id,
-                //we pass also the answer, if the answer is an array like in the checkbox type, we jsencode.
-                'answer' => is_array($answer) ? json_encode($answer) : $answer,
+                'answer' => is_array($answer) ? json_encode($answer) : $answer
             ];
             SurveyQuestionAnswer::create($data);
         }
-        //we are going to listen to that response in the front end side.
+
+        // Return 201 status code for successful creation
         return response("", 201);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -132,8 +155,10 @@ class SurveyController extends Controller
      * @param \App\Models\Survey $survey
      * @return \Illuminate\Http\Response
      */
+    // Update survey information with input from UpdateSurveyRequest
     public function update(UpdateSurveyRequest $request, Survey $survey)
     {
+        // Validate input data from the request
         $data = $request->validated();
 
         // Check if image was given and save on local file system
@@ -147,7 +172,7 @@ class SurveyController extends Controller
                 File::delete($absolutePath);
             }
         }
-        //Update survey in the database
+        // Update survey in the database
         $survey->update($data);
 
         // Get ids as plain array of existing questions
@@ -171,56 +196,67 @@ class SurveyController extends Controller
             }
         }
         // Update existing questions
-        //Creating a map with id in key.
-
+        // Creating a map with id in key.
         $questionMap = collect($data['questions'])->keyBy('id');
-        //Boucle in the database for the question.
+        // Loop through the questions in the database
         foreach ($survey->questions as $question) {
-            //if the database question id exist inside the question map, this mean that is the question we need to update.
+            // If the database question id exists inside the question map, this means that it is the question to update.
             if (isset($questionMap[$question->id])) {
                 $this->updateQuestion($question, $questionMap[$question->id]);
             }
         }
+        // Return the updated survey
         return new SurveyResource($survey);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a survey and its associated image.
      *
      * @param \App\Models\Survey $survey
      * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
      */
 
     public function destroy(Survey $survey, Request $request)
     {
+        // Verify that the current user has the right to delete the form.
         $user = $request->user();
-        //verification que le current user à le droit de supprimer le formulaire.
+
         if ($user->id !== $survey->user_id) {
             return abort(403, 'Unauthorized action.');
         }
+
+        // Delete survey from database
         $survey->delete();
 
-        // If there is an old image, delete it
+        // If there is an image associated with survey, delete it
         if ($survey->image) {
             $absolutePath = public_path($survey->image);
             File::delete($absolutePath);
         }
-
+        // Return HTTP No Content status code
         return response('', 204);
     }
 
+    /**
+     * Save image to disk and return the relative path.
+     *
+     * @param string $image
+     * @return string
+     * @throws \Exception
+     */
     private function saveImage($image)
     {
-        // Check if image is valid base64 string
+        // Check if the image is a valid base64 string
         if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
-            // Take out the base64 encoded text without mime type
+            // Remove the mime type from the image string
             $image = substr($image, strpos($image, ',') + 1);
-            // Get file extension
+            // Get the image file extension
             $type = strtolower($type[1]); // jpg, png, gif
 
-            // Check if file is an image
+            // Check if the file is an image
             if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
-                throw new \Exception('invalid image type');
+                throw new \Exception('Invalid image type');
             }
             $image = str_replace(' ', '+', $image);
             $image = base64_decode($image);
@@ -229,13 +265,14 @@ class SurveyController extends Controller
                 throw new \Exception('base64_decode failed');
             }
         } else {
-            throw new \Exception('did not match data URI with image data');
+            throw new \Exception('Data URI does not contain image data');
         }
 
         $dir = 'images/';
         $file = Str::random() . '.' . $type;
         $absolutePath = public_path($dir);
         $relativePath = $dir . $file;
+        // Create the image directory if it does not exist
         if (!File::exists($absolutePath)) {
             File::makeDirectory($absolutePath, 0755, true);
         }
@@ -243,6 +280,8 @@ class SurveyController extends Controller
 
         return $relativePath;
     }
+
+
 
     private function createQuestion($data)
     {
