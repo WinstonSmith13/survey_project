@@ -8,29 +8,37 @@ use App\Models\Survey;
 use App\Models\SurveyAnswer;
 use Illuminate\Http\Request;
 
+/**
+ * DashboardController Class
+ * Handles the dashboard functionalities for the User.
+ */
 class DashboardController extends Controller
 {
+    /**
+     * Get the data for the User's dashboard
+     * 
+     * @param \Illuminate\Http\Request $request
+     * 
+     * @return array Dashboard data
+     */
     public function index(Request $request)
     {
+        // Get the authenticated user
         $user = $request->user();
 
-        //Total number of Surveys of the user.
-
+        // Get the total number of Surveys for the user
         $total = Survey::query()->where('user_id', $user->id)->count();
 
-        //Latest Survey
-
+        // Get the latest Survey for the user
         $latest = Survey::query()->where('user_id', $user->id)->latest('created_at')->first();
 
-        //Total Number of answers
-// on fait une jointure pour trouver les reponses d'un specifique formulaire.
+        // Get the total number of answers for the user's Surveys
         $totalAnswers = SurveyAnswer::query()
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
             ->count();
 
-        //Latest 5 Answer
-
+        // Get the latest 5 answers for the user's Surveys
         $latestAnswers = SurveyAnswer::query()
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
@@ -38,10 +46,10 @@ class DashboardController extends Controller
             ->limit(5)
             ->getModels('survey_answers.*');
 
-        //All Surveys
-
+        // Get all Surveys for the user
         $allSurveys = Survey::query()->where('user_id', $user->id)->get();
 
+        // Return dashboard data
         return [
             'totalSurveys' => $total,
             'latestSurvey' => $latest ? new SurveyResourceDashboard($latest) : null,

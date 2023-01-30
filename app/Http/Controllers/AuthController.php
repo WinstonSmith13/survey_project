@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -12,9 +11,16 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+    /**
+     * Register a new user
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+
     public function register(Request $request)
     {
-        //Permet d'ajouter des regles pour la validations de l'inscription.
+        // Validate incoming data
         $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|string|unique:users,email',
@@ -33,53 +39,65 @@ class AuthController extends Controller
             'password' => bcrypt($data['password'])
         ]);
 
-        //Création du token
+        // Create token for user
         $token = $user->createToken('main')->plainTextToken;
 
+        // Return user and token information
         return response([
             'user' => $user,
             'token' => $token
         ]);
     }
 
+    /**
+     * Login user with email and password
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
-
+        // Validate incoming data
         $credentials = $request->validate([
             'email' => 'required|email|string|exists:users,email',
-            'password' => [
-                'required',
-            ],
+            'password' => 'required',
             'remember' => 'boolean'
         ]);
         $remember = $credentials['remember'] ?? false;
         unset($credentials['remember']);
 
-        //Si les valeurs ne correspondent pas alors on déclare un message. Avec le fameux statut 422 (qui indique que la validation n'est pas bonne.
+        // If credentials are invalid, return error message with status code 422 (Unprocessable Entity)
         if (!Auth::attempt($credentials, $remember)) {
             return response([
-                'error' => "Les informations d'identification fournies ne sont pas valides"
+                'error' => "Invalid login credentials"
             ], 422);
         }
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
 
-
+        // Return user and token data
         return response([
             'user' => $user,
             'token' => $token
         ]);
     }
 
+
+   /**
+    * Logs out the authenticated user by revoking their access token.
+    *
+    * @return \Illuminate\Http\Response The response indicating whether the logout was successful.
+    */
+
     public function logout()
     {
-        /** @var User $user */
-        $user = Auth::user();
-//Pour la suppresion du Token utilisé pour l'authentification de l'utilisateur.
-        $user->currentAccessToken()->delete();
+    /** @var User $user */ 
+    $user = Auth::user();
+    // Revokes the current access token for the authenticated user.
+    $user->currentAccessToken()->delete();
 
-        return response([
-            'success' => true
-        ]);
+    return response([
+    'success' => true
+    ]);
     }
 }
