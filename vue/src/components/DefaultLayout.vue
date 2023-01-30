@@ -11,8 +11,8 @@
 
 <script setup>
 
-import Notification from './Notification.vue';
-import FooterTemplate from './template/FooterTemplate.vue';
-import NavigationBarTemplate from './template/NavigationBarTemplate.vue';
+import Notification from './Notification.vue'
+import FooterTemplate from './template/FooterTemplate.vue'
+import NavigationBarTemplate from './template/NavigationBarTemplate.vue'
 
 </script>

@@ -4,14 +4,14 @@
       <h1 class="text-3xl font-bold tracking-tight text-gray-900">
         {{ title }}
       </h1>
-      <slot name="header"></slot>
+      <slot name="header" />
     </div>
   </header>
   <main>
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
       <!-- content -->
       <div class="px-4 py-6 sm:px-0">
-        <slot></slot>
+        <slot />
       </div>
     </div>
   </main>
@@ -19,8 +19,7 @@
 
 <script setup>
 const props = defineProps({
-  title: String,
-});
+  title: String
+})
 
 </script>
-

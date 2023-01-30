@@ -1,8 +1,8 @@
-/* eslint-disable no-undef */
 import { createStore } from "vuex";
 import axiosClient from "../axios";
 
 const store = createStore({
+  // State property, which holds the data for the application
   state: {
     user: {
       data: {},
@@ -32,23 +32,25 @@ const store = createStore({
     },
   },
   getters: {},
+
+  // State property, which holds the data for the application
   actions: {
+    // Action to get user data
     getUser({ commit }) {
       return axiosClient.get("/user").then((res) => {
-        console.log(res);
+        // Commit a mutation to set the user data in the store
         commit("setUser", res.data);
       });
     },
-    // Make an Http request
+    // Action to get survey data by id
     getSurvey({ commit }, id) {
-      // To show some loading animation.
       commit("setCurrentSurveyLoading", true);
       // Make an Http request and with the get method we pass the id.
       return axiosClient
         .get(`/survey/${id}`)
         .then((res) => {
           commit("setCurrentSurvey", res.data);
-          // if we get a response the loading has to stop.
+          // If we get a response the loading stop.
           commit("setCurrentSurveyLoading", false);
           return res;
         })
@@ -59,9 +61,7 @@ const store = createStore({
     },
     saveSurvey({ commit }, survey) {
       delete survey.image_url;
-
       let response;
-      // sur le formulaire a une id alors on est entrain de modifier un formulaire, sinon on est entrain de créer un nouveau formulaire.
       if (survey.id) {
         response = axiosClient
           .put(`/survey/${survey.id}`, survey)
@@ -75,14 +75,12 @@ const store = createStore({
           return res;
         });
       }
-
       return response;
     },
     deleteSurvey(id) {
       return axiosClient.delete(`/survey/${id}`);
     },
     getSurveys({ commit }) {
-      // To show some loading text.
       commit("setSurveysLoading", true);
       return axiosClient.get("/survey").then((res) => {
         // If we get a response the loading has to stop.
@@ -112,19 +110,17 @@ const store = createStore({
         return response;
       });
     },
-    // on ne fait qu'envoyer une requete.
     saveSurveyAnswer({ commit }, { surveyId, answers }) {
       return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },
     getSurveyBySlug({ commit }, slug) {
       commit("setCurrentSurveyLoading", true);
-      // on fait une requete http pour envoyer vers le back.
+      // I make an http request to send to the backend by passing the slug as a parameter
       return axiosClient
         .get(`survey-by-slug/${slug}`)
         .then((res) => {
           commit("setCurrentSurvey", res.data);
           commit("setCurrentSurveyLoading", false);
-          // on retourne la reponse.
           return res;
         })
         .catch((err) => {
@@ -199,12 +195,12 @@ const store = createStore({
     setSurveys: (state, surveys) => {
       state.surveys.data = surveys.data;
     },
-    // deconstruction pour avoir pas que DATA mais message et type.
+    // Deconstruction to have not only DATA but also message and type.
     notify: (state, { message, type }) => {
       state.notification.show = true;
       state.notification.type = type;
       state.notification.message = message;
-      // After 3sec set the notification to false.
+      // After 3sec set the notification to false to make the notification disappear.
       setTimeout(() => {
         state.notification.show = false;
       }, 3000);
