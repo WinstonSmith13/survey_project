@@ -319,18 +319,27 @@ class SurveyController extends Controller
         return SurveyQuestion::create($validator->validated());
     }
 
-    //$question is an instance of surveyQuestion.
+    /**
+     * Update a survey question with new data
+     * 
+     * @param SurveyQuestion $question - instance of survey question to update
+     * @param array $data - updated data for the survey question
+     * @return boolean - result of the update operation
+     */
     private function updateQuestion(SurveyQuestion $question, $data)
     {
+        // Convert data array to json encoded string
         if (is_array($data['data'])) {
-
             $data['data'] = json_encode($data['data']);
         }
-        //Creating a validator
+
+        // Validate updated data
         $validator = Validator::make($data, [
-            //the id must exist in the SurveyQuestion id column.
+            // Check if id exists in the SurveyQuestion id column
             'id' => 'exists:App\Models\SurveyQuestion,id',
+            // Ensure question is a required string
             'question' => 'required|string',
+            // Ensure type is a required value in the list of options
             'type' => ['required', Rule::in([
                 Survey::TYPE_TEXT,
                 Survey::TYPE_TEXTAREA,
@@ -338,11 +347,13 @@ class SurveyController extends Controller
                 Survey::TYPE_RADIO,
                 Survey::TYPE_CHECKBOX,
             ])],
+            // Make description an optional string
             'description' => 'nullable|string',
+            // Ensure data is present
             'data' => 'present',
         ]);
 
-        //We call update with the validatorUpdate. For security.
+        // Update the survey question with validated data
         return $question->update($validator->validated());
     }
 }
