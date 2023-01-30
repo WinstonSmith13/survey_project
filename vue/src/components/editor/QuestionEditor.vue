@@ -85,9 +85,6 @@
           focus:outline-none focus:ring-primary focus:border-primary
           sm:text-sm
         ">
-
-
-
                 <option v-for='type in questionTypes' :key='type' :value='type'>
                     {{ upperCaseFirst(type) }}
                 </option>
@@ -202,7 +199,7 @@ const emit = defineEmits(["change", "addQuestion", "deleteQuestion"]);
 
 // Re-create the whole question data to avoid unintentional reference change
 const model = ref(JSON.parse(JSON.stringify(props.question)));
-// Get question types from vuex
+// Get question types from the store
 const questionTypes = computed(() => store.state.questionTypes);
 
 

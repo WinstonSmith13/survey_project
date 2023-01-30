@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Permet d'éviter les erreurs relier à la sécurité des navigateurs en lien aux API */
+/* Avoid errors related to browser security related to APIs */
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
@@ -29,23 +29,24 @@ Route::middleware('auth:sanctum')->group(function(){
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
-    //All the CRUD are specified using the route::resource
+    // All the CRUD are specified using the route::resource
     Route::resource('/survey', SurveyController::class);
 
-    //add a protected route. With the index method.
+    // Add a protected route. With the index method
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    //add a protected route. With the index method.
+    // Add a protected route. With the index method 
     Route::get('/answer/{id}', [SurveyQuestionAnswerController::class, 'index']);
 });
 
-//on specifie bien l'action pour avoir les données pour les guests
-//on passe le slug - on specifie que l'on veut survey by slug.
+// Specify the action to have the data for the guests
+// I pass the slug as a parameter - I specify that I want survey by slug.
 Route::get('/survey-by-slug/{survey:slug}', [SurveyController::class, 'showForGuest']);
+
 
 Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer']);
 
-//pour des raisons de sécurités toujours utiliser la méthode post pour l'inscription.
+// Authentification routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 

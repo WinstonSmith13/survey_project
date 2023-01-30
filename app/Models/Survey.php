@@ -33,7 +33,7 @@ class Survey extends Model
             ->saveSlugsTo('slug');
     }
 
-    //Création des relations entre les tables.
+    // Relation between tables
     public function questions(){
         return $this->hasMany(SurveyQuestion::class);
     }
