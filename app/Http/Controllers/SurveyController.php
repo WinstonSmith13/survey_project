@@ -283,17 +283,22 @@ class SurveyController extends Controller
 
 
 
-    private function createQuestion($data)
+    /**
+     * Create a survey question from data.
+     *
+     * @param array $data
+     * @return \App\Models\SurveyQuestion
+     * @throws \Exception
+     */
+    private function createQuestion(array $data)
     {
-        //Dans un premier temps verification que les datas recu contiennent des data
+        // Check if data contains data
         if (is_array($data['data'])) {
-
             $data['data'] = json_encode($data['data']);
         }
-        //Creating a validator
+        // Validate the data
         $validator = Validator::make($data, [
             'question' => 'required|string',
-            //Adding the option
             'type' => ['required', Rule::in([
                 Survey::TYPE_TEXT,
                 Survey::TYPE_TEXTAREA,
@@ -305,6 +310,12 @@ class SurveyController extends Controller
             'data' => 'present',
             'survey_id' => 'exists:App\Models\Survey,id'
         ]);
+
+        // Check if data is valid
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors()->first());
+        }
+
         return SurveyQuestion::create($validator->validated());
     }
 
