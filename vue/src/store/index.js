@@ -32,8 +32,7 @@ const store = createStore({
     },
   },
   getters: {},
-
-  // State property, which holds the data for the application
+  // Action property that perform asynchronous operations, such as making HTTP requests to the server
   actions: {
     // Action to get user data
     getUser({ commit }) {
@@ -77,8 +76,11 @@ const store = createStore({
       }
       return response;
     },
-    deleteSurvey(id) {
-      return axiosClient.delete(`/survey/${id}`);
+    deleteSurvey({ dispatch }, id) {
+      return axiosClient.delete(`/survey/${id}`).then((res) => {
+        dispatch("getSurveys");
+        return res;
+      });
     },
     getSurveys({ commit }) {
       commit("setSurveysLoading", true);
@@ -157,7 +159,7 @@ const store = createStore({
         });
     },
   },
-
+  // Mutations are used to change the store state of a Vuex application.
   mutations: {
     logout: (state) => {
       state.user.data = {};

@@ -25,10 +25,11 @@ class SurveyQuestionAnswerController extends Controller
             ->join('survey_answers', 'survey_question_answers.survey_answer_id', '=', 'survey_answers.id')
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->select('survey_question_answers.survey_question_id', 'survey_question_answers.answer')
-            ->where('surveys.id', $id)
-            ->where('surveys.user_id', $user->id)
+            ->where('surveys.id', '=', $id)
+            ->where('surveys.user_id', '=', $user->id)
             ->get()
             ->groupBy('survey_question_id');
+
 
         // Query to retrieve all survey data for the authenticated user
         $allDataSurvey = Survey::query()

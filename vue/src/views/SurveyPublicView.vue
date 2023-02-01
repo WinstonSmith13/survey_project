@@ -6,7 +6,6 @@
     >
       <div role="status">
         Chargement ...
-
         <svg
           class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
           viewBox="0 0 100 101"
@@ -28,10 +27,9 @@
 
     <div v-else>
       <img
-            
             src="./../assets/Logo-MUST-400px-2.png"
             alt="logo must"
-            class="object-fit h-10 w-23 mb-6"
+            class="mr-4 h-12 mb-6"
           >
           <form
       
@@ -49,7 +47,7 @@
           <img
             v-else
             src="./../assets/Logo-MUST-400px-2.png"
-            alt="logo must"
+            alt="image survey"
             class="shadow-md"
           >
         </div>
@@ -158,5 +156,3 @@ function submitAnotherResponse () {
 }
 </script>
 
-<style>
-</style>

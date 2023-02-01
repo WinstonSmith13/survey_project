@@ -217,24 +217,27 @@ class SurveyController extends Controller
      * @param \Illuminate\Http\Request $request
      */
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Models\Survey $survey
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Survey $survey, Request $request)
     {
-        // Verify that the current user has the right to delete the form.
         $user = $request->user();
-
         if ($user->id !== $survey->user_id) {
             return abort(403, 'Unauthorized action.');
         }
 
-        // Delete survey from database
         $survey->delete();
 
-        // If there is an image associated with survey, delete it
+        // If there is an old image, delete it
         if ($survey->image) {
             $absolutePath = public_path($survey->image);
             File::delete($absolutePath);
         }
-        // Return HTTP No Content status code
+
         return response('', 204);
     }
 
@@ -321,7 +324,7 @@ class SurveyController extends Controller
 
     /**
      * Update a survey question with new data
-     * 
+     *
      * @param SurveyQuestion $question - instance of survey question to update
      * @param array $data - updated data for the survey question
      * @return boolean - result of the update operation

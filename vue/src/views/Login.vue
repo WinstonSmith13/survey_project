@@ -5,7 +5,6 @@
       src="./../assets/Logo-MUST-400px-2.png"
       alt="Logo Must"
     >
-
     <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
       Connectez-vous à votre compte
     </h2>
@@ -47,10 +46,8 @@
             d="M6 18L18 6M6 6l12 12"
           />
         </svg>
-
       </span>
     </div>
-
     <input
       type="hidden"
       name="remember"
@@ -90,7 +87,6 @@
         >
       </div>
     </div>
-
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         <input
@@ -106,7 +102,6 @@
         >Mémoriser</label>
       </div>
     </div>
-
     <div>
       <button
         type="submit"
@@ -123,9 +118,7 @@
     </div>
   </form>
 </template>
-
 <script setup>
-
 import { LockClosedIcon } from '@heroicons/vue/20/solid'
 import store from '../store'
 import { useRouter } from 'vue-router'
@@ -160,6 +153,3 @@ function login (ev) {
 }
 
 </script>
-
-<style>
-</style>

@@ -16,9 +16,9 @@ class DashboardController extends Controller
 {
     /**
      * Get the data for the User's dashboard
-     * 
-     * @param \Illuminate\Http\Request $request
-     * 
+     *
+     * @param Request $request
+     *
      * @return array Dashboard data
      */
     public function index(Request $request)
