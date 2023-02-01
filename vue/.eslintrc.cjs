@@ -1,20 +1,12 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true
-  },
-  extends: [
-    'plugin:vue/vue3-strongly-recommended',
-    'standard'
-  ],
-  overrides: [
-  ],
-  parserOptions: {
-    ecmaVersion: 'latest'
-  },
-  plugins: [
-    'vue'
-  ],
-  rules: {
-  }
-}
+    root: true,
+    env: {
+        browser: true,
+        node: true,
+    },
+    parserOptions: {
+        parser: "babel-eslint",
+    },
+    extends: ["@vue/standard", "@vue/prettier"],
+    plugins: ["vue"],
+};
