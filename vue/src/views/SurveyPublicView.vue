@@ -26,11 +26,17 @@
       </div>
     </div>
 
-    <!--Forms-->
-    <form
-      v-else
+    <div v-else>
+      <img
+            
+            src="./../assets/Logo-MUST-400px-2.png"
+            alt="logo must"
+            class="object-fit h-10 w-23 mb-6"
+          >
+          <form
+      
       @submit.prevent="submitSurvey"
-      class="container mx-auto bg-gray-100 mt-40 rounded-md p-4 shadow-md"
+      class="container mx-auto bg-gray-100  rounded-md p-4 shadow-md"
     >
       <div class="grid grid-cols-6 items-center">
         <div class="mr-4">
@@ -97,6 +103,8 @@
         </button>
       </div>
     </form>
+    </div>
+    
   </div>
 </template>
 
