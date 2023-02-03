@@ -13,11 +13,10 @@ class AuthController extends Controller
 {
     /**
      * Register a new user
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-
     public function register(Request $request)
     {
         // Validate incoming data
@@ -31,8 +30,8 @@ class AuthController extends Controller
                 Password::min(8)->mixedCase()->numbers()->symbols()
             ]
         ]);
-
-        /** @var User */
+        //We have validated data.
+        /** @var User $user*/
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -51,7 +50,7 @@ class AuthController extends Controller
 
     /**
      * Login user with email and password
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -59,6 +58,7 @@ class AuthController extends Controller
     {
         // Validate incoming data
         $credentials = $request->validate([
+            //Email must exist in the users email column
             'email' => 'required|email|string|exists:users,email',
             'password' => 'required',
             'remember' => 'boolean'
@@ -69,7 +69,7 @@ class AuthController extends Controller
         // If credentials are invalid, return error message with status code 422 (Unprocessable Entity)
         if (!Auth::attempt($credentials, $remember)) {
             return response([
-                'error' => "Invalid login credentials"
+                'error' => "Informations de connexion incorrects"
             ], 422);
         }
         $user = Auth::user();
@@ -91,7 +91,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-    /** @var User $user */ 
+    /** @var User $user */
     $user = Auth::user();
     // Revokes the current access token for the authenticated user.
     $user->currentAccessToken()->delete();
