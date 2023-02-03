@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Requests\StoreSurveyRequest;
 use App\Http\Requests\UpdateSurveyRequest;
 use App\Http\Resources\SurveyResource;
@@ -16,7 +14,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreSurveyAnswerRequest;
-
 
 class SurveyController extends Controller
 {
@@ -98,16 +95,13 @@ class SurveyController extends Controller
         return new SurveyResource($survey);
     }
 
-
     // Store survey answer by creating a new record in the SurveyAnswer table
-
     /**
      * Store survey answer.
      * @param \App\Http\Requests\StoreSurveyAnswerRequest $request
      * @param \App\Models\Survey $survey
      * @return \Illuminate\Http\Response
      */
-
     public function storeAnswer(StoreSurveyAnswerRequest $request, Survey $survey)
     {
         // Validate request data
@@ -146,7 +140,6 @@ class SurveyController extends Controller
         // Return 201 status code for successful creation
         return response("", 201);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -216,13 +209,6 @@ class SurveyController extends Controller
      * @return \Illuminate\Http\Response
      * @param \Illuminate\Http\Request $request
      */
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Survey $survey
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Survey $survey, Request $request)
     {
         $user = $request->user();
@@ -283,8 +269,6 @@ class SurveyController extends Controller
 
         return $relativePath;
     }
-
-
 
     /**
      * Create a survey question from data.

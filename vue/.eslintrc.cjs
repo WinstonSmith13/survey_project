@@ -8,5 +8,4 @@ module.exports = {
         parser: "babel-eslint",
     },
     extends: ["@vue/standard", "@vue/prettier"],
-    plugins: ["vue"],
 };
