@@ -1,5 +1,6 @@
 <template>
   <!-- Question index -->
+  
   <div class="flex items-center justify-between">
     <h3 class="text-lg font-bold">
       {{ index + 1 }}. {{ model.question }}
@@ -270,66 +271,87 @@
   <hr class="my-4">
 </template>
 
-<script setup>
+<script setup>// Import the uuid library and vue's computed and ref functions
 import { v4 as uuidv4 } from 'uuid'
 import { computed, ref } from 'vue'
 import store from '../../store'
 
+// Define the props for the component
 const props = defineProps({
   question: Object,
   index: Number
 })
 
+// Define the emitted events for the component
 const emit = defineEmits(['change', 'addQuestion', 'deleteQuestion'])
 
-// Re-create the whole question data to avoid unintentional reference change
+// Create a reactive reference to store the question data
 const model = ref(JSON.parse(JSON.stringify(props.question)))
-// Get question types from the store
+
+// Compute the question types from the store state
 const questionTypes = computed(() => store.state.questionTypes)
 
+// Utility function to uppercase the first letter of a string
 function upperCaseFirst (str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+// Utility function to get the options of the question
 function getOptions () {
   return model.value.data.options
 }
+
+// Utility function to set the options of the question
 function setOptions (options) {
   model.value.data.options = options
 }
-// Check if the question should have options
+
+// Utility function to check if the question should have options
 function shouldHaveOptions () {
   return ['select', 'radio', 'checkbox'].includes(model.value.type)
 }
-// Add option
+
+// Add an option to the question
 function addOption () {
   setOptions([
     ...getOptions(),
+    // Import the uuid library
     { uuid: uuidv4(), text: '' }
   ])
   dataChange()
 }
-// Remove option
+
+// Remove an option from the question
 function removeOption (op) {
   setOptions(getOptions().filter((opt) => opt !== op))
   dataChange()
 }
+
+// Handle changes in the question type
 function typeChange () {
   if (shouldHaveOptions()) {
+    // Permet de conserver la valeur des options même si on change de type. 
     setOptions(getOptions() || [])
   }
   dataChange()
 }
-// Emit the data change
+
+// Emit the data change event
 function dataChange () {
-  const data = model.value
+  const data = JSON.parse(JSON.stringify(model.value));
   if (!shouldHaveOptions()) {
     delete data.data.options
   }
   emit('change', data)
 }
+
+// Emit the add question event
 function addQuestion () {
+  // props.index + 1 allows to create new questions with the previous index + 1
   emit('addQuestion', props.index + 1)
 }
+
+// Emit the delete question event
 function deleteQuestion () {
   emit('deleteQuestion', props.question)
 }

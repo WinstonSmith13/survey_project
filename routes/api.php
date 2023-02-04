@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | This is where the API routes for the application are registered. These
-| routes are loaded by the RouteServiceProvider and assigned to the "api" 
+| routes are loaded by the RouteServiceProvider and assigned to the "api"
 | middleware group. The goal is to make building your API easy!
 |
 */

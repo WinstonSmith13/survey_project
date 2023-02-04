@@ -1,6 +1,7 @@
 <template>
   <PageComponent>
     <template #header>
+    
       <div class="flex items-center justify-between">
         <h1 class="text-3xl font-bold text-gray-900">
           {{ route.params.id ? model.title : "Créer un formulaire" }}
@@ -268,7 +269,7 @@ watch(
     }
   }
 )
-// If the current component is rendered on survey update route we make a request to fetch survey
+//Pour récupérer la route vers le survey avec l'id correspondant.
 if (route.params.id) {
   store.dispatch('getSurvey', route.params.id)
 }
@@ -299,21 +300,17 @@ function addQuestion (index) {
 }
 
 // l'idée est supprimer les questions qui n'ont pas de questions.id
-function deleteQuestion (question) {
-  model.value.questions = model.value.questions.filter((q) => q.id !== question.id)
-}
 
 function questionChange (question) {
-  // Important to explicitelly assign question.data.options, because otherwise it is a Proxy object
-  // and it is lost in JSON.stringify()
   if (question.data.options) {
     question.data.options = [...question.data.options]
   }
   model.value.questions = model.value.questions.map((q) => {
     if (q.id === question.id) {
+
       return JSON.parse(JSON.stringify(question))
     }
-    return q
+    return q 
   })
 }
 
@@ -324,7 +321,7 @@ function saveSurvey () {
       message: 'Le formulaire a bien été créé.'
     })
     router.push({
-      name: 'SurveyView',
+      name: 'Surveys',
       params: { id: data.data.id }
     })
   })

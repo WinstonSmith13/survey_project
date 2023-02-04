@@ -29,7 +29,9 @@ class SurveyController extends Controller
         $user = $request->user();
 
         // Retrieve the surveys for the authenticated user, ordered by creation date (most recent first), and paginated
-        return SurveyResource::collection(Survey::where('user_id', $user->id)->orderBy('created_at', 'DESC')->paginate(10));
+        return SurveyResource::collection(Survey::where('user_id', $user->id)
+            ->orderBy('created_at', 'DESC')
+            ->get());
     }
 
     /**
