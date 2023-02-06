@@ -112,6 +112,11 @@ const store = createStore({
         return response;
       });
     },
+    deleteUser({ commit }) {
+      return axiosClient.delete("/user").then(() => {
+        commit("logout");
+      });
+    },
     saveSurveyAnswer({ commit }, { surveyId, answers }) {
       return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },

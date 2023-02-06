@@ -82,7 +82,6 @@ class AuthController extends Controller
         ]);
     }
 
-
    /**
     * Logs out the authenticated user by revoking their access token.
     *
@@ -99,5 +98,29 @@ class AuthController extends Controller
     return response([
     'success' => true
     ]);
+    }
+
+    /**
+     * Delete a user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+        if (!$user) {
+            return response([
+                'error' => "Vous devez être connecté pour effectuer cette action"
+            ], 401);
+        }
+
+        // Delete the user
+        $user->delete();
+
+        return response([
+            'success' => true
+        ]);
     }
 }

@@ -79,6 +79,14 @@
                 <MenuItems
                   class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
+                <MenuItem v-slot="{ active }"> 
+                  <button
+                    @click="deleteUser"
+                    :class="['block px-4 py-2 text-sm text-red-500 hover:text-primary cursor-pointer']"
+                  >
+                    Supprimer le compte
+                  </button>
+                </MenuItem>
                   <MenuItem v-slot="{ active }">
                     <button
                       @click="logout"
@@ -88,6 +96,7 @@
                       déconnecter
                     </button>
                   </MenuItem>
+                  
                 </MenuItems>
               </transition>
             </Menu>
@@ -143,6 +152,13 @@
         <div class="mt-3 space-y-1 px-2">
           <DisclosureButton
             as="a"
+            @click="deleteUser"
+            class="block rounded-md px-3 py-2 text-base font-medium text-red-500 hover:bg-gray-700 hover:text-white cursor-pointer"
+          >
+          Supprimer le compte
+          </DisclosureButton>
+          <DisclosureButton
+            as="a"
             @click="logout"
             class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
           >
@@ -182,6 +198,19 @@ export default {
     const store = useStore()
     const router = useRouter()
 
+    function deleteUser () {if (
+    confirm(
+      'Êtes-vous sûre de vouloir supprimer votre compte ?'
+    )
+  )
+      {store.dispatch('deleteUser')
+      .then(()=>{
+        router.push({
+          name:'Login'
+        })
+      })}
+    }
+
     function logout () {
       store.dispatch('logout')
         .then(() => {
@@ -196,7 +225,8 @@ export default {
     return {
       user: computed(() => store.state.user.data),
       navigation,
-      logout
+      logout,
+      deleteUser,
     }
   }
 }

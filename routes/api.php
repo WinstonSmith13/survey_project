@@ -31,6 +31,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    // This route deletes the authenticated user.
+    Route::delete('/user', [AuthController::class, 'delete']);
+
     // This route logs out the authenticated user.
     Route::post('/logout', [AuthController::class, 'logout']);
 
