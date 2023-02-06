@@ -106,7 +106,7 @@
       <label
         for="question_type"
         class="block text-sm font-medium text-gray-700"
-      >Select Question Type</label>
+      >Selectionner le type de réponse</label>
       <select
         id="question_type"
         name="question_type"

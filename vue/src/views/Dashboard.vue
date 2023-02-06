@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <!--Total Answers-->
+      <!--Total Answers
       <div
         class="bg-white shadow-md p-3 text-center flex flex-col order-2 lg:order-4 animate-fade-in-down m-4"
         style="animation-delay: 0.2s"
@@ -53,7 +53,7 @@
         <div class="text-8xl pb-4 font-semibold flex-1 flex items-center justify-center">
           {{ data.totalAnswers }}
         </div>
-      </div>
+      </div>-->
 
       <!--Latest Surveys-->
       <div class="row-span-2 animate-fade-in-down order-3 lg:order-1 bg-white shadow-md p-4">

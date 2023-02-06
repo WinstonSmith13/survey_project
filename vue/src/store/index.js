@@ -205,7 +205,7 @@ const store = createStore({
       // After 3sec set the notification to false to make the notification disappear.
       setTimeout(() => {
         state.notification.show = false;
-      }, 3000);
+      }, 5000);
     },
   },
   modules: {},

@@ -42,10 +42,10 @@ class SurveyController extends Controller
      */
     public function store(StoreSurveyRequest $request)
     {
-        // Get validated data from the request
+        // Get and store validated data from the request
         $data = $request->validated();
 
-        // Check and save image if provided
+        // Check and save image if image on a local file
         if (isset($data['image'])) {
             $relativePath = $this->saveImage($data['image']);
             $data['image'] = $relativePath;
@@ -238,14 +238,14 @@ class SurveyController extends Controller
      */
     private function saveImage($image)
     {
-        // Check if the image is a valid base64 string
+        // Check if the image is a valid base64
         if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
-            // Remove the mime type from the image string
+            // Store all after the , from the image string
             $image = substr($image, strpos($image, ',') + 1);
             // Get the image file extension
             $type = strtolower($type[1]); // jpg, png, gif
 
-            // Check if the file is an image
+            // Check if the file is in the array
             if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
                 throw new \Exception('Invalid image type');
             }
@@ -259,6 +259,7 @@ class SurveyController extends Controller
             throw new \Exception('Data URI does not contain image data');
         }
 
+        //Stockage sur le serveur local
         $dir = 'images/';
         $file = Str::random() . '.' . $type;
         $absolutePath = public_path($dir);

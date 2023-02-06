@@ -14,6 +14,7 @@ class UpdateSurveyRequest extends FormRequest
     public function authorize()
     {
         // User is authorized or not.
+        // La méthode route renvoie les informations associées à la route actuelle dans l'application.
         $survey = $this->route('survey');
         if ($this->user()->id !== $survey->user_id) {
             return false;

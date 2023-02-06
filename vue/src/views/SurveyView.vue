@@ -260,6 +260,7 @@ const model = ref({
   questions: []
 })
 // Watch to current survey data change and when this happens we update local model
+// This is a vuejs method
 watch(
   () => store.state.currentSurvey.data,
   (newVal, oldVal) => {
@@ -269,18 +270,20 @@ watch(
     }
   }
 )
-//Pour récupérer la route vers le survey avec l'id correspondant.
+// To retrieve the route to the survey with the corresponding id.
 if (route.params.id) {
   store.dispatch('getSurvey', route.params.id)
 }
 
 function onImageChoose (ev) {
   const file = ev.target.files[0]
+
+  // To display the preview
   const reader = new FileReader()
   reader.onload = () => {
-    // The field to send on backend and apply validations
+    // The field to send on backend and apply validations b64 string
     model.value.image = reader.result
-    // The field to display here
+    // The field  to display the image preview
     model.value.image_url = reader.result
     ev.target.value = ''
   }
