@@ -31,11 +31,23 @@
   </footer>
 </template>
 
-<script setup>
+<script>
+import { useRouter } from 'vue-router';
+
 
 const footerNavigation = [
   { name: 'À propos', to: { name: 'About' } },
   { name: 'Mentions légales', to: { name: 'LegalInformation' } }
 ]
 
+export default {
+  setup () {
+  const router = useRouter()
+  return {
+      footerNavigation,
+    }
+}
+};
 </script>
+
+
