@@ -10,10 +10,13 @@
           class="
           py-2
           px-3
+          m-2
           text-white
           bg-emerald-500
           rounded-md
-          hover:bg-emerald-600"
+          hover:bg-emerald-600
+          text-center
+          "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
