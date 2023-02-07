@@ -61,7 +61,7 @@
 
     <div
       v-else
-      class="h-screen"
+      
     >
       <div
         v-if="surveys.data.length > 0"
