@@ -1,5 +1,6 @@
 <template>
   <div>
+  <!-- Penser à ajouter une feature j'ai oublié mon mot de passe. -->
     <img
       class="mx-auto h-12 w-auto"
       src="./../assets/Logo-MUST-400px-2.png"
